@@ -2,5 +2,5 @@
 
 Membros do grupo:
 -David Antunes - 93052
--Lenik Rog«drigues - 99594
+-Lenik Rodrigues - 99594
 -Maria Vinheiras - 105563
