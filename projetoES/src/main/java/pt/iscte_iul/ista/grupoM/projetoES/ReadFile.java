@@ -48,7 +48,7 @@ public class ReadFile {
 	
 	
 	 public static void main(String[] args) {
-	        File f = new File("C:/Users/Maria Vinheiras/CaracterizaçãoDasSalas.csv");
+	        File f = new File("CaracterizaçãoDasSalas.csv");
 	        ReadFile rf = new ReadFile(f);
 	    }
 	
