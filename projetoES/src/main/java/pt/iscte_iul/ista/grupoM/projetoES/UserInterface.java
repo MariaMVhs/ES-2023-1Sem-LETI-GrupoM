@@ -44,7 +44,7 @@ public class UserInterface {
 			@Override
 			public void actionPerformed(ActionEvent e) {
                 String path = pathInput.getText();
-                openFieldsWindow();
+//                openFieldsWindow();
                 usePath(path);
 			}
 			
@@ -63,6 +63,8 @@ public class UserInterface {
 		});
 	}
 	
+//	fieldsWindow will be used for the user to input the field order. WIP
+	
 	private void openFieldsWindow() {
 		fieldsWindow=new JFrame("Select order of fields");
 		fieldsWindow.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -74,7 +76,6 @@ public class UserInterface {
 	}
 	
 	private void usePath(String path) {
-		System.out.println(path);
-//		reader = new ReadFile(path);
+		reader = new ReadFile(path);
 	}
 }
