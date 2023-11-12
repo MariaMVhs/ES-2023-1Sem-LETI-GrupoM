@@ -17,6 +17,18 @@ import java.util.List;
 
 //funcao para ler o ficheiro, guarda o ficheiro numa lista de CSVRecords 
 public class ReadFile {
+	
+	public ReadFile(String path) {
+        List<CSVRecord> records;
+		try {
+			records = readCSV(path);
+	        writeTabulatorHTML(records);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
     public static List<CSVRecord> readCSV(String source) throws IOException {
     	
     	//variavel que guarda o PATH do ficheiro
