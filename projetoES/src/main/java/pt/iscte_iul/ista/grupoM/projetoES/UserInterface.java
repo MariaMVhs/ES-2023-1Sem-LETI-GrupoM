@@ -3,10 +3,18 @@ package pt.iscte_iul.ista.grupoM.projetoES;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
 import javax.swing.WindowConstants;
 
 public class UserInterface {
@@ -15,7 +23,6 @@ public class UserInterface {
 	private JFrame fieldsWindow;
 	private JButton carregarHorario;
 	private JButton quit;
-	private JTextField pathInput;
 	private ReadFile reader;
 	
 	public UserInterface() {
@@ -29,27 +36,57 @@ public class UserInterface {
 	
 	private void createButtons() {
 		pathWindow.setLayout(new GridLayout(0, 1));
-		pathInput = new JTextField();
 		setupCarregarHorario();
 		setupQuit();
 		pathWindow.add(carregarHorario);
 		pathWindow.add(quit);
-		pathWindow.add(pathInput);
 	}
 	
-	private void setupCarregarHorario() {
+	/*private void setupCarregarHorario() {
 		carregarHorario = new JButton("Importar horário");
 		carregarHorario.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
                 String path = pathInput.getText();
-//                openFieldsWindow();
+                //openFieldsWindow();
                 usePath(path);
 			}
 			
 		});
-	}
+	}*/
+	
+	private void setupCarregarHorario() {
+	    carregarHorario = new JButton("Importar horário");
+	    carregarHorario.addActionListener(new ActionListener() {
+	        
+	    	 @Override
+	         public void actionPerformed(ActionEvent e) {
+	             try {
+					showPathInputDialog();
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+	         }
+	         
+	     });
+	 }
+
+	 private void showPathInputDialog() throws Exception {
+		 // Show an input dialog to get the file path from the user
+		 String path = JOptionPane.showInputDialog(UserInterface.this, "Enter file path:");
+		     
+		 // Check if the user entered a path
+		 if (path != null && !path.isEmpty()) {
+	        usePath(path);
+	     } else {
+	    // Handle the case where the user canceled or entered an empty path
+	    // You can show a message or take appropriate action
+        System.out.println("User canceled or entered an empty path");
+	   }
+		        
+	 }
 
 	private void setupQuit() {
 		quit = new JButton("Cancel");
@@ -75,7 +112,7 @@ public class UserInterface {
 		fieldsWindow.setVisible(true);
 	}
 	
-	private void usePath(String path) {
+	private void usePath(String path) throws Exception {
 		reader = new ReadFile(path);
 	}
 }
