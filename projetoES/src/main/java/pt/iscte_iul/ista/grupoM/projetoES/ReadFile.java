@@ -21,6 +21,11 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
+<<<<<<< Updated upstream
+//		Check why lines 161 - 163 are in comment
+
+=======
+>>>>>>> Stashed changes
 //funcao para ler o ficheiro, guarda o ficheiro numa lista de CSVRecords 
 public class ReadFile {
 	
