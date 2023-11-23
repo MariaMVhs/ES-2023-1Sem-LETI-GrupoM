@@ -18,6 +18,7 @@ import java.io.Reader;
 import java.net.URL;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 
 //funcao para ler o ficheiro, guarda o ficheiro numa lista de CSVRecords 
@@ -26,7 +27,7 @@ public class ReadFile {
     private List<Integer> fieldOrder;
     private String htmlPath;
 
-	public ReadFile(String path, List<Interger> fieldOrder) {
+	public ReadFile(String path, List<Integer> fieldOrder) {
         this.fieldOrder=fieldOrder;
         List<CSVRecord> records;
 		try {
@@ -134,7 +135,7 @@ public class ReadFile {
             for (int i = startIndex; i < endIndex; i++) {
                 writer.println("{");
                 String[] record = records.get(i);
-                for (int j = 0; j < record.size(); j++) {
+                for (int j = 0; j < record.length; j++) {
                     String header = records.get(0)[j];
                     String value = record[j];
                     writer.println("\"" + header + "\": \"" + value + "\",");
