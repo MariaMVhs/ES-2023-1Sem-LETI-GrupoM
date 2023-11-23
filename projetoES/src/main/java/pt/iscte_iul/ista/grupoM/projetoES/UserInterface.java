@@ -24,7 +24,6 @@ public class UserInterface {
 	private JFrame changeFieldsWindow;
 	private JButton carregarHorario;
 	private JButton quit;
-<<<<<<< Updated upstream
 	private JButton fieldsManter;
 	private JButton fieldsAlterar;
 	private ReadFile reader;
@@ -32,10 +31,6 @@ public class UserInterface {
 	private String csvPath;
 	private List<Integer> fieldOrder;
 
-=======
-	private Horario reader;
-	
->>>>>>> Stashed changes
 	public UserInterface() {
 		pathWindow = new JFrame("main");
 		pathWindow.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -366,23 +361,4 @@ public class UserInterface {
 
 		});
 	}
-<<<<<<< Updated upstream
-=======
-	
-//	fieldsWindow will be used for the user to input the field order. WIP
-	
-	private void openFieldsWindow() {
-		fieldsWindow=new JFrame("Select order of fields");
-		fieldsWindow.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-		fieldsWindow.setSize(200,400);
-		fieldsWindow.setLocation(100,50);
-		fieldsWindow.setLayout(new GridLayout(0, 1));
-		fieldsWindow.add(quit);
-		fieldsWindow.setVisible(true);
-	}
-	
-	private void usePath(String path) throws Exception {
-		reader = new Horario(path);
-	}
->>>>>>> Stashed changes
 }
