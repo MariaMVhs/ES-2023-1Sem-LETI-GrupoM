@@ -16,14 +16,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 //funcao para ler o ficheiro, guarda o ficheiro numa lista de CSVRecords 
-public class ReadFile {
+public class Horario {
 	
+<<<<<<< Updated upstream:projetoES/src/main/java/pt/iscte_iul/ista/grupoM/projetoES/ReadFile.java
     private List<Integer> fieldOrder;
     private String htmlPath;
 
 	public ReadFile(String path, List<Integer> fieldOrder ) {
 		
         this.fieldOrder=fieldOrder;
+=======
+	public Horario(String path) {
+>>>>>>> Stashed changes:projetoES/src/main/java/pt/iscte_iul/ista/grupoM/projetoES/Horario.java
         List<CSVRecord> records;
         
 		try {
