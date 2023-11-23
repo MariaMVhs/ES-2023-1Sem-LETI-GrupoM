@@ -5,10 +5,6 @@ import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
 
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.awt.Desktop;
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
@@ -16,8 +12,6 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.io.Reader;
 import java.net.URL;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,18 +40,12 @@ public class ReadFile {
 		}
 	}
 	
-	private void openBrowser(URI uri) throws IOException, URISyntaxException {
-		Desktop desktop = Desktop.isDesktopSupported() ? Desktop.getDesktop() : null;
-		if (desktop != null && desktop.isSupported(Desktop.Action.BROWSE)) {
-			desktop.browse(uri);
-		}
-	}
-
     public String getPath() {
         return htmlPath;
     }
 
     private List<String[]> reorderFields(List<CSVRecord> rec){
+    	
         List<String[]> reorderedFile = new ArrayList<String[]>();
         for(int i = 0; i<rec.size(); i++) {
             String[] line = new String[fieldOrder.size()];
@@ -69,7 +57,7 @@ public class ReadFile {
         return reorderedFile;
     }
 	
-    public static List<CSVRecord> readCSV(String source) throws IOException {
+    public List<CSVRecord> readCSV(String source) throws IOException {
     	
     	//variavel que guarda o PATH do ficheiro
         Reader reader;
@@ -92,19 +80,6 @@ public class ReadFile {
         }
     }
 
-    
-   /* public static void main(String[] args) throws IOException {
-    	//pede a localização do ficheiro
-        System.out.print("Enter CSV source (URL, 'user', or local file path): ");
-        //le os parametros passados
-        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        String source = reader.readLine();
-        //chama a funcao readCSV com os parametros lidos
-        List<CSVRecord> records = readCSV(source);
-        //chama a funcao writeTabulator com a lista lida do readCSV, lista de CSVRecords
-        writeTabulatorHTML(records);
-    }*/
-    
 
     public static void writeTabulatorHTML(List<String[]> records) throws IOException {
     	//inicia HTML
