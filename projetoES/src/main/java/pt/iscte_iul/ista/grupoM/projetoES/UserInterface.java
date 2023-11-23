@@ -13,6 +13,7 @@ import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.WindowConstants;
 
@@ -25,7 +26,6 @@ public class UserInterface {
 	private JButton quit;
 	private JButton fieldsManter;
 	private JButton fieldsAlterar;
-	private JTextField pathInput;
 	private ReadFile reader;
 	private String htmlPath;
 	private String csvPath;
@@ -42,12 +42,10 @@ public class UserInterface {
 
 	private void createButtons() {
 		pathWindow.setLayout(new GridLayout(0, 1));
-		pathInput = new JTextField();
 		setupCarregarHorario();
 		setupQuit();
 		pathWindow.add(carregarHorario);
 		pathWindow.add(quit);
-		pathWindow.add(pathInput);
 	}
 
 	private void openFieldsWindow() {
@@ -103,19 +101,42 @@ public class UserInterface {
 
 //	Buttons
 
+	//Abre um pop up para inserir o path do fichero
 	private void setupCarregarHorario() {
-		carregarHorario = new JButton("Importar horário");
-		carregarHorario.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				csvPath = pathInput.getText();
-				openFieldsWindow();
-			}
-
-		});
-	}
-
+		//CArrega um botao
+	    carregarHorario = new JButton("Importar horário");
+	    carregarHorario.addActionListener(new ActionListener() {
+	        
+	    	 @Override
+	         public void actionPerformed(ActionEvent e) {
+	             try {
+	            	//funcao que executa a acao de clicar no botao
+					showPathInputDialog();
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+	         }
+	         
+	     });
+	 }
+	
+	//funcao para carregar o path do ficherio fornecido
+	 private void showPathInputDialog() throws Exception {
+		 //Abre o pop up para inserir o path
+		 String path = JOptionPane.showInputDialog(UserInterface.this, "Enter file path:");
+		     
+		 //Verifica se está vazio
+		 if (path != null && !path.isEmpty()) {
+	        csvPath = path;
+	        openFieldsWindow();
+	     } else {
+	    	System.out.println("User canceled or entered an empty path");
+	   }
+		        
+	 }
+	
+	
 	private void setupFieldsOpen() {
 		fieldsManter = new JButton("Abrir horário");
 		fieldsManter.addActionListener(new ActionListener() {
