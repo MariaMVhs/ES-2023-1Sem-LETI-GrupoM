@@ -21,23 +21,20 @@ public class ReadFile {
     private List<Integer> fieldOrder;
     private String htmlPath;
 
-	public ReadFile(String path, List<Integer> fieldOrder) {
+	public ReadFile(String path, List<Integer> fieldOrder ) {
+		
         this.fieldOrder=fieldOrder;
         List<CSVRecord> records;
+        
 		try {
 			records = readCSV(path);
-	        writeTabulatorHTML(reorderFields(records));
+	        writeTabulatorHTML(reorderFields(records),20);
 	        htmlPath = System.getProperty("user.dir") + File.separator + "output.html";
-/*	        try {
-				openBrowser(new File(htmlPath).toURI());
-			} catch (URISyntaxException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}*/
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
 	}
 	
     public String getPath() {
@@ -81,7 +78,7 @@ public class ReadFile {
     }
 
 
-    public static void writeTabulatorHTML(List<String[]> records) throws IOException {
+    public static void writeTabulatorHTML(List<String[]> records, int pageSize) throws IOException {
     	//inicia HTML
         try (PrintWriter writer = new PrintWriter("output.html")) {
             writer.println("<!DOCTYPE html>");
@@ -95,22 +92,20 @@ public class ReadFile {
             writer.println("<body>");
             writer.println("<h1>Horario ISCTE-IUL</h1>");
             writer.println("<div id=\"csv-table\"></div>");
+            //writer.println("<button onclick=\"prevPage()\">Previous Page</button>");
+            //writer.println("<button onclick=\"nextPage()\">Next Page</button>");
             writer.println("<script>");
+                       
+            writer.println("var pageSize = " + pageSize + ";");
             
             //pega na lista de CSVRecords e escreve em HTML, de modo a ser interpretado pelo tabulator ( modo: {col:val} )
             writer.println("var data = [");
 
-            //paginaçao, pois nao carregava os dados todos de uma vez, AINDA SEM SUCESSO
-            int pageSize = 10;
-            int currentPage = 1;
-            int startIndex = (currentPage - 1) * pageSize;
-            int endIndex = Math.min(startIndex + pageSize, records.size());
-
             //percorre a lista e escreve no modo indicado
-            for (int i = startIndex; i < endIndex; i++) {
+            for (int i = 1; i < records.size(); i++) {
                 writer.println("{");
                 String[] record = records.get(i);
-                for (int j = 0; j < record.length; j++) {
+                for ( int j = 0 ; j < record.length; j++) {
                     String header = records.get(0)[j];
                     String value = record[j];
                     writer.println("\"" + header + "\": \"" + value + "\",");
@@ -120,22 +115,23 @@ public class ReadFile {
 
             writer.println("];");
 
-            //configuraçoes do tabulator
-            writer.println("var table = new Tabulator(\"#csv-table\", {");
+           
+            writer.println("table = new Tabulator(\"#csv-table\", {");
             writer.println("data: data,");
             writer.println("layout: \"fitDataFill\",");
-            writer.println("pagination: \"local\", // Enable local pagination");
-            //paginacao
-            writer.println("paginationSize: " + pageSize + ",");
-            writer.println("paginationInitialPage: " + currentPage + ",");
+            writer.println("pagination: \"local\",");
+            writer.println("paginationSize: pageSize,");
             
             //escreve o nome das colunas, que vai buscar a primeira linha do CSV, neste caso ao index 0 da lista de CSVRecords
             writer.println("columns: [");
             for (String header : records.get(0)) {
                 writer.println("{ title: \"" + header + "\", field: \"" + header + "\" },");
             }
+            
             writer.println("],");
             writer.println("});");
+            
+            
             //termina o HTML
             writer.println("</script>");
             writer.println("</body>");

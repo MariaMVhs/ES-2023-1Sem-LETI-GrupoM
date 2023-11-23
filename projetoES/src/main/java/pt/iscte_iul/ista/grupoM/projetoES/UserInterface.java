@@ -103,7 +103,7 @@ public class UserInterface {
 
 	//Abre um pop up para inserir o path do fichero
 	private void setupCarregarHorario() {
-		//CArrega um botao
+		//Carrega um botao
 	    carregarHorario = new JButton("Importar horário");
 	    carregarHorario.addActionListener(new ActionListener() {
 	        
@@ -177,7 +177,10 @@ public class UserInterface {
 	// da aula, Características da sala pedida para a aula, Sala atribuída à aula.
 
 	private void setupChangeFieldsButtons() {
+		
+		//JButton[] buttons = new JButton[];	
 		fieldOrder = new ArrayList<Integer>();
+		
 		JButton curso = new JButton("Curso");
 		JButton unidadeCurricular = new JButton("Unidade Curricular");
 		JButton turno = new JButton("Turno");
