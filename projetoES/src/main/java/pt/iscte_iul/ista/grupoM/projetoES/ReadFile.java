@@ -20,24 +20,25 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 
-
-//		Check why lines 161 - 163 are in comment
-
 //funcao para ler o ficheiro, guarda o ficheiro numa lista de CSVRecords 
 public class ReadFile {
 	
-	public ReadFile(String path) {
+    private List<Integer> fieldOrder;
+    private String htmlPath;
+
+	public ReadFile(String path, List<Interger> fieldOrder) {
+        this.fieldOrder=fieldOrder;
         List<CSVRecord> records;
 		try {
 			records = readCSV(path);
-	        writeTabulatorHTML(records);
-	        String htmlPath = System.getProperty("user.dir") + File.separator + "output.html";
-	        try {
+	        writeTabulatorHTML(reorderFields(records));
+	        htmlPath = System.getProperty("user.dir") + File.separator + "output.html";
+/*	        try {
 				openBrowser(new File(htmlPath).toURI());
 			} catch (URISyntaxException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			}
+			}*/
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -50,6 +51,22 @@ public class ReadFile {
 			desktop.browse(uri);
 		}
 	}
+
+    public String getPath() {
+        return htmlPath;
+    }
+
+    private List<String[]> reorderFields(List<CSVRecord> rec){
+        List<String[]> reorderedFile = new ArrayList<String[]>();
+        for(int i = 0; i<rec.size(); i++) {
+            String[] line = new String[fieldOrder.size()];
+            for(int j=0; j<fieldOrder.size(); j++){
+                line[j]=rec.get(i).get(fieldOrder.get(j));
+            }
+            reorderedFile.add(line);
+        }
+        return reorderedFile;
+    }
 	
     public static List<CSVRecord> readCSV(String source) throws IOException {
     	
@@ -75,7 +92,7 @@ public class ReadFile {
     }
 
     
-    public static void main(String[] args) throws IOException {
+   /* public static void main(String[] args) throws IOException {
     	//pede a localização do ficheiro
         System.out.print("Enter CSV source (URL, 'user', or local file path): ");
         //le os parametros passados
@@ -85,10 +102,10 @@ public class ReadFile {
         List<CSVRecord> records = readCSV(source);
         //chama a funcao writeTabulator com a lista lida do readCSV, lista de CSVRecords
         writeTabulatorHTML(records);
-    }
+    }*/
     
 
-    public static void writeTabulatorHTML(List<CSVRecord> records) throws IOException {
+    public static void writeTabulatorHTML(List<String[]> records) throws IOException {
     	//inicia HTML
         try (PrintWriter writer = new PrintWriter("output.html")) {
             writer.println("<!DOCTYPE html>");
@@ -116,10 +133,10 @@ public class ReadFile {
             //percorre a lista e escreve no modo indicado
             for (int i = startIndex; i < endIndex; i++) {
                 writer.println("{");
-                CSVRecord record = records.get(i);
+                String[] record = records.get(i);
                 for (int j = 0; j < record.size(); j++) {
-                    String header = records.get(0).get(j);
-                    String value = record.get(j);
+                    String header = records.get(0)[j];
+                    String value = record[j];
                     writer.println("\"" + header + "\": \"" + value + "\",");
                 }
                 writer.println("},");
