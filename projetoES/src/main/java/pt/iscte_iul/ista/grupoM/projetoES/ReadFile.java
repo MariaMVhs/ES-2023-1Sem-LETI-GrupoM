@@ -5,10 +5,6 @@ import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
 
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.awt.Desktop;
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
@@ -16,40 +12,49 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.io.Reader;
 import java.net.URL;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
-
 
 //funcao para ler o ficheiro, guarda o ficheiro numa lista de CSVRecords 
 public class ReadFile {
 	
-	public ReadFile(String path) {
+    private List<Integer> fieldOrder;
+    private String htmlPath;
+
+	public ReadFile(String path, List<Integer> fieldOrder ) {
+		
+        this.fieldOrder=fieldOrder;
         List<CSVRecord> records;
+        
 		try {
 			records = readCSV(path);
-	        writeTabulatorHTML(records);
-	        String htmlPath = System.getProperty("user.dir") + File.separator + "output.html";
-	        try {
-				openBrowser(new File(htmlPath).toURI());
-			} catch (URISyntaxException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+	        writeTabulatorHTML(reorderFields(records),20);
+	        htmlPath = System.getProperty("user.dir") + File.separator + "output.html";
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
 	}
 	
-	private void openBrowser(URI uri) throws IOException, URISyntaxException {
-		Desktop desktop = Desktop.isDesktopSupported() ? Desktop.getDesktop() : null;
-		if (desktop != null && desktop.isSupported(Desktop.Action.BROWSE)) {
-			desktop.browse(uri);
-		}
-	}
+    public String getPath() {
+        return htmlPath;
+    }
+
+    private List<String[]> reorderFields(List<CSVRecord> rec){
+    	
+        List<String[]> reorderedFile = new ArrayList<String[]>();
+        for(int i = 0; i<rec.size(); i++) {
+            String[] line = new String[fieldOrder.size()];
+            for(int j=0; j<fieldOrder.size(); j++){
+                line[j]=rec.get(i).get(fieldOrder.get(j));
+            }
+            reorderedFile.add(line);
+        }
+        return reorderedFile;
+    }
 	
-    public static List<CSVRecord> readCSV(String source) throws IOException {
+    public List<CSVRecord> readCSV(String source) throws IOException {
     	
     	//variavel que guarda o PATH do ficheiro
         Reader reader;
@@ -72,21 +77,8 @@ public class ReadFile {
         }
     }
 
-    
-    public static void main(String[] args) throws IOException {
-    	//pede a localização do ficheiro
-        System.out.print("Enter CSV source (URL, 'user', or local file path): ");
-        //le os parametros passados
-        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        String source = reader.readLine();
-        //chama a funcao readCSV com os parametros lidos
-        List<CSVRecord> records = readCSV(source);
-        //chama a funcao writeTabulator com a lista lida do readCSV, lista de CSVRecords
-        writeTabulatorHTML(records);
-    }
-    
 
-    public static void writeTabulatorHTML(List<CSVRecord> records) throws IOException {
+    public static void writeTabulatorHTML(List<String[]> records, int pageSize) throws IOException {
     	//inicia HTML
         try (PrintWriter writer = new PrintWriter("output.html")) {
             writer.println("<!DOCTYPE html>");
@@ -100,24 +92,22 @@ public class ReadFile {
             writer.println("<body>");
             writer.println("<h1>Horario ISCTE-IUL</h1>");
             writer.println("<div id=\"csv-table\"></div>");
+            //writer.println("<button onclick=\"prevPage()\">Previous Page</button>");
+            //writer.println("<button onclick=\"nextPage()\">Next Page</button>");
             writer.println("<script>");
+                       
+            writer.println("var pageSize = " + pageSize + ";");
             
             //pega na lista de CSVRecords e escreve em HTML, de modo a ser interpretado pelo tabulator ( modo: {col:val} )
             writer.println("var data = [");
 
-            //paginaçao, pois nao carregava os dados todos de uma vez, AINDA SEM SUCESSO
-            int pageSize = 10;
-            int currentPage = 1;
-            int startIndex = (currentPage - 1) * pageSize;
-            int endIndex = Math.min(startIndex + pageSize, records.size());
-
             //percorre a lista e escreve no modo indicado
-            for (int i = startIndex; i < endIndex; i++) {
+            for (int i = 1; i < records.size(); i++) {
                 writer.println("{");
-                CSVRecord record = records.get(i);
-                for (int j = 0; j < record.size(); j++) {
-                    String header = records.get(0).get(j);
-                    String value = record.get(j);
+                String[] record = records.get(i);
+                for ( int j = 0 ; j < record.length; j++) {
+                    String header = records.get(0)[j];
+                    String value = record[j];
                     writer.println("\"" + header + "\": \"" + value + "\",");
                 }
                 writer.println("},");
@@ -125,22 +115,23 @@ public class ReadFile {
 
             writer.println("];");
 
-            //configuraçoes do tabulator
-            writer.println("var table = new Tabulator(\"#csv-table\", {");
+           
+            writer.println("table = new Tabulator(\"#csv-table\", {");
             writer.println("data: data,");
             writer.println("layout: \"fitDataFill\",");
-            writer.println("pagination: \"local\", // Enable local pagination");
-            //paginacao
-            writer.println("paginationSize: " + pageSize + ",");
-            writer.println("paginationInitialPage: " + currentPage + ",");
+            writer.println("pagination: \"local\",");
+            writer.println("paginationSize: pageSize,");
             
             //escreve o nome das colunas, que vai buscar a primeira linha do CSV, neste caso ao index 0 da lista de CSVRecords
             writer.println("columns: [");
             for (String header : records.get(0)) {
                 writer.println("{ title: \"" + header + "\", field: \"" + header + "\" },");
             }
+            
             writer.println("],");
             writer.println("});");
+            
+            
             //termina o HTML
             writer.println("</script>");
             writer.println("</body>");
