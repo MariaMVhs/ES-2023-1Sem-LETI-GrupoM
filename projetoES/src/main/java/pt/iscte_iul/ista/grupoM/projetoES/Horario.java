@@ -22,9 +22,9 @@ import java.util.List;
 
 
 //funcao para ler o ficheiro, guarda o ficheiro numa lista de CSVRecords 
-public class ReadFile {
+public class Horario {
 	
-	public ReadFile(String path) {
+	public Horario(String path) {
         List<CSVRecord> records;
 		try {
 			records = readCSV(path);

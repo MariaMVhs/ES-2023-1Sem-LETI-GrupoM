@@ -23,7 +23,7 @@ public class UserInterface {
 	private JFrame fieldsWindow;
 	private JButton carregarHorario;
 	private JButton quit;
-	private ReadFile reader;
+	private Horario reader;
 	
 	public UserInterface() {
 		pathWindow=new JFrame("main");
@@ -113,6 +113,6 @@ public class UserInterface {
 	}
 	
 	private void usePath(String path) throws Exception {
-		reader = new ReadFile(path);
+		reader = new Horario(path);
 	}
 }
