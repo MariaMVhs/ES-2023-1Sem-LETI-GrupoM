@@ -16,14 +16,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 //funcao para ler o ficheiro, guarda o ficheiro numa lista de CSVRecords 
-public class ReadFile {
+public class Horario {
 	
-    private List<Integer> fieldOrder;
-    private String htmlPath;
-
-	public ReadFile(String path, List<Integer> fieldOrder ) {
-		
-        this.fieldOrder=fieldOrder;
+	public Horario(String path) {
         List<CSVRecord> records;
         
 		try {
