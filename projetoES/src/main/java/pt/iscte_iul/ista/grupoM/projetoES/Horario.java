@@ -18,7 +18,11 @@ import java.util.List;
 //funcao para ler o ficheiro, guarda o ficheiro numa lista de CSVRecords 
 public class Horario {
 	
-	public Horario(String path) {
+	private List<Integer> fieldOrder;
+	private String htmlPath;
+
+	public Horario(String path, List<Integer> fieldOrder) {
+		this.fieldOrder=fieldOrder;
         List<CSVRecord> records;
         
 		try {

@@ -23,9 +23,14 @@ public class UserInterface {
 	private JFrame fieldsWindow;
 	private JFrame changeFieldsWindow;
 	private JButton carregarHorario;
+	private JButton fieldsManter;
+	private JButton fieldsAlterar;
 	private JButton quit;
+	private String htmlPath;
+	private String csvPath;
+	private List<Integer> fieldOrder;
 	private Horario reader;
-	
+
 	public UserInterface() {
 		pathWindow = new JFrame("main");
 		pathWindow.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -74,7 +79,7 @@ public class UserInterface {
 	}
 
 	private void useCsvPath(String path) {
-		reader = new ReadFile(path, fieldOrder);
+		reader = new Horario(path, fieldOrder);
 		htmlPath = reader.getPath();
 		try {
 			openBrowser();
@@ -355,21 +360,5 @@ public class UserInterface {
 			}
 
 		});
-	}
-	
-//	fieldsWindow will be used for the user to input the field order. WIP
-	
-	private void openFieldsWindow() {
-		fieldsWindow=new JFrame("Select order of fields");
-		fieldsWindow.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-		fieldsWindow.setSize(200,400);
-		fieldsWindow.setLocation(100,50);
-		fieldsWindow.setLayout(new GridLayout(0, 1));
-		fieldsWindow.add(quit);
-		fieldsWindow.setVisible(true);
-	}
-	
-	private void usePath(String path) throws Exception {
-		reader = new Horario(path);
 	}
 }
