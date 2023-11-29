@@ -25,6 +25,8 @@ public class Horario {
 	
 	private List<Integer> fieldOrder;
 	private String htmlPath;
+	private LocalTime t;
+	private String time;
 	
 	/**
      * Construtor da classe Horario.
@@ -32,25 +34,16 @@ public class Horario {
      * @param path Caminho para o CSV.
      * @param fieldOrder Ordem dos campos no arquivo CSV.
      */
-<<<<<<< HEAD
 	
-	public Horario(String time) {
-		LocalTime localTime;
-		
-		try {
-		localTime = LocalTime.parse(time);
-		} catch (Exception e) {
-			System.out.println("Hora inválida: " + time);
-			return;
-		}
-		
-//		if(localTime.isValid()) {
-//			
-//		}
+	public Horario() {
+		LocalTime t;
 	}
 	
-=======
->>>>>>> 77e56bb1c97e8bcdd068c38bcc372e2918f49f8b
+	public Horario(String time) {
+		LocalTime t;
+	}
+	
+
 	public Horario(String path, List<Integer> fieldOrder) {
 		this.fieldOrder=fieldOrder;
         List<CSVRecord> records;
@@ -63,6 +56,38 @@ public class Horario {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+	}
+	
+	
+	public LocalTime horario(String time) {
+		LocalTime localTime;
+		
+		try {
+		localTime = LocalTime.parse(time);
+		} catch (Exception e) {
+			System.out.println("Hora inválida: " + time);
+			return null;
+		}
+		
+		
+		
+		if(!validTime(localTime)) {
+			System.out.println("Hora inválida: " + time);
+			return null;
+		}
+		
+		return localTime;
+		
+	}
+	
+	public static boolean validTime(LocalTime t) {
+		if(t.equals(LocalTime.MIN) || t.equals(LocalTime.MAX)) {
+			return true;
+		}else if(t.equals(LocalTime.of(24, 0, 0))){
+			return false;
+		}
+		return true;
 		
 	}
 	
