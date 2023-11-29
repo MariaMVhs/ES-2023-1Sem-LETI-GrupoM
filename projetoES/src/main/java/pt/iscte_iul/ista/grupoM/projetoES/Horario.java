@@ -17,8 +17,9 @@ import java.util.List;
 import java.time.LocalTime;
 
 //funcao para ler o ficheiro, guarda o ficheiro numa lista de CSVRecords 
+
 /**
- * Classe de um horário.
+ * Classe de um horario.
  */
 public class Horario {
 	
@@ -28,9 +29,10 @@ public class Horario {
 	/**
      * Construtor da classe Horario.
      *
-     * @param path e o caminho para o CSV.
-     * @param fieldOrder e a ordem dos campos no arquivo CSV.
+     * @param path Caminho para o CSV.
+     * @param fieldOrder Ordem dos campos no arquivo CSV.
      */
+<<<<<<< HEAD
 	
 	public Horario(String time) {
 		LocalTime localTime;
@@ -47,6 +49,8 @@ public class Horario {
 //		}
 	}
 	
+=======
+>>>>>>> 77e56bb1c97e8bcdd068c38bcc372e2918f49f8b
 	public Horario(String path, List<Integer> fieldOrder) {
 		this.fieldOrder=fieldOrder;
         List<CSVRecord> records;
@@ -67,7 +71,6 @@ public class Horario {
      *
      * @return O caminho para o HTML gerado.
      */
-	
     public String getPath() {
         return htmlPath;
     }
@@ -75,10 +78,9 @@ public class Horario {
     /**
      * Reordena os campos de um CSV.
      *
-     * @param rec e uma lista de registos CSV.
-     * @return uma lista de registos CSV com os campos reordenados.
+     * @param rec lista de registos CSV.
+     * @return lista de registos CSV com os campos reordenados.
      */
-    
     private List<String[]> reorderFields(List<CSVRecord> rec){
     	
         List<String[]> reorderedFile = new ArrayList<String[]>();
@@ -93,13 +95,12 @@ public class Horario {
     }
     
     /**
-     * Lê um CSV e retorna uma lista de registos CSV.
+     * Le um CSV e retorna uma lista de registos CSV.
      *
      * @param source e o caminho do CSV.
      * @return uma lista de registos CSV.
      * @throws IOException se ocorrer um erro ao ler o arquivo CSV.
      */
-	
     public List<CSVRecord> readCSV(String source) throws IOException {
     	
     	//variavel que guarda o PATH do ficheiro
@@ -126,11 +127,10 @@ public class Horario {
     /**
      * Escreve uma tabela HTML a partir de uma lista de registos CSV.
      *
-     * @param records e uma lista de registros CSV.
-     * @param borderSize e o tamanho do limite da tabela HTML.
-     * @throws IOException ee ocorrer um erro ao escrever a tabela HTML.
+     * @param records lista de registos CSV.
+     * @param pageSize tamanho da pagina HTML.
+     * @throws IOException se ocorrer um erro ao escrever a tabela HTML.
      */
-
     public static void writeTabulatorHTML(List<String[]> records, int pageSize) throws IOException {
     	//inicia HTML
         try (PrintWriter writer = new PrintWriter("output.html")) {
