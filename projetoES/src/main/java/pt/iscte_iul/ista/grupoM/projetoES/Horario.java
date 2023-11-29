@@ -16,14 +16,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 //funcao para ler o ficheiro, guarda o ficheiro numa lista de CSVRecords 
-public class ReadFile {
+/**
+ * Classe de um horário.
+ */
+public class Horario {
 	
-    private List<Integer> fieldOrder;
-    private String htmlPath;
-
-	public ReadFile(String path, List<Integer> fieldOrder ) {
-		
-        this.fieldOrder=fieldOrder;
+	private List<Integer> fieldOrder;
+	private String htmlPath;
+	
+	/**
+     * Construtor da classe Horario.
+     *
+     * @param path e o caminho para o CSV.
+     * @param fieldOrder e a ordem dos campos no arquivo CSV.
+     */
+	
+	public Horario(String path, List<Integer> fieldOrder) {
+		this.fieldOrder=fieldOrder;
         List<CSVRecord> records;
         
 		try {
@@ -37,10 +46,23 @@ public class ReadFile {
 		
 	}
 	
+	/**
+     * Retorna o caminho para o HTML gerado.
+     *
+     * @return O caminho para o HTML gerado.
+     */
+	
     public String getPath() {
         return htmlPath;
     }
 
+    /**
+     * Reordena os campos de um CSV.
+     *
+     * @param rec e uma lista de registos CSV.
+     * @return uma lista de registos CSV com os campos reordenados.
+     */
+    
     private List<String[]> reorderFields(List<CSVRecord> rec){
     	
         List<String[]> reorderedFile = new ArrayList<String[]>();
@@ -53,6 +75,14 @@ public class ReadFile {
         }
         return reorderedFile;
     }
+    
+    /**
+     * Lê um CSV e retorna uma lista de registos CSV.
+     *
+     * @param source e o caminho do CSV.
+     * @return uma lista de registos CSV.
+     * @throws IOException se ocorrer um erro ao ler o arquivo CSV.
+     */
 	
     public List<CSVRecord> readCSV(String source) throws IOException {
     	
@@ -76,7 +106,14 @@ public class ReadFile {
             return parser.getRecords();
         }
     }
-
+    	
+    /**
+     * Escreve uma tabela HTML a partir de uma lista de registos CSV.
+     *
+     * @param records e uma lista de registros CSV.
+     * @param borderSize e o tamanho do limite da tabela HTML.
+     * @throws IOException ee ocorrer um erro ao escrever a tabela HTML.
+     */
 
     public static void writeTabulatorHTML(List<String[]> records, int pageSize) throws IOException {
     	//inicia HTML

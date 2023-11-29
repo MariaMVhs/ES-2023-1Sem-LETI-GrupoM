@@ -23,13 +23,13 @@ public class UserInterface {
 	private JFrame fieldsWindow;
 	private JFrame changeFieldsWindow;
 	private JButton carregarHorario;
-	private JButton quit;
 	private JButton fieldsManter;
 	private JButton fieldsAlterar;
-	private ReadFile reader;
+	private JButton quit;
 	private String htmlPath;
 	private String csvPath;
 	private List<Integer> fieldOrder;
+	private Horario reader;
 
 	public UserInterface() {
 		pathWindow = new JFrame("main");
@@ -79,7 +79,7 @@ public class UserInterface {
 	}
 
 	private void useCsvPath(String path) {
-		reader = new ReadFile(path, fieldOrder);
+		reader = new Horario(path, fieldOrder);
 		htmlPath = reader.getPath();
 		try {
 			openBrowser();
