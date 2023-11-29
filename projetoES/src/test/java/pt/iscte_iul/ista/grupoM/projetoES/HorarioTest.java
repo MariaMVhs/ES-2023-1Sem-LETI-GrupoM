@@ -45,10 +45,18 @@ class HorarioTest {
 	}
 
 	/**
-	 * Test method for {@link pt.iscte_iul.ista.grupoM.projetoES.Horario#Horario(java.lang.String)}.
+	 * Test method for {@link pt.iscte_iul.ista.grupoM.projetoES.Horario#Horario(java.lang.String, java.util.List)}.
 	 */
 	@Test
 	final void testHorario() {
+		fail("Not yet implemented"); // TODO
+	}
+
+	/**
+	 * Test method for {@link pt.iscte_iul.ista.grupoM.projetoES.Horario#getPath()}.
+	 */
+	@Test
+	final void testGetPath() {
 		fail("Not yet implemented"); // TODO
 	}
 
@@ -61,7 +69,7 @@ class HorarioTest {
 	}
 
 	/**
-	 * Test method for {@link pt.iscte_iul.ista.grupoM.projetoES.Horario#writeTabulatorHTML(java.util.List)}.
+	 * Test method for {@link pt.iscte_iul.ista.grupoM.projetoES.Horario#writeTabulatorHTML(java.util.List, int)}.
 	 */
 	@Test
 	final void testWriteTabulatorHTML() {
