@@ -47,10 +47,11 @@ class HorarioTest {
 	/**
 	 * Test method for {@link pt.iscte_iul.ista.grupoM.projetoES.Horario#Horario(java.lang.String, java.util.List)}.
 	 */
-	@Test
-	final void testHorario() {
-		fail("Not yet implemented"); // TODO
-	}
+//	@Test
+//	final void testHorario() {
+//		HorarioTest test= new HorarioTest(); 
+//		String 
+//	}
 
 	/**
 	 * Test method for {@link pt.iscte_iul.ista.grupoM.projetoES.Horario#getPath()}.

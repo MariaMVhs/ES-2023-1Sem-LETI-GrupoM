@@ -14,6 +14,7 @@ import java.io.Reader;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.time.LocalTime;
 
 //funcao para ler o ficheiro, guarda o ficheiro numa lista de CSVRecords 
 /**
@@ -30,6 +31,21 @@ public class Horario {
      * @param path e o caminho para o CSV.
      * @param fieldOrder e a ordem dos campos no arquivo CSV.
      */
+	
+	public Horario(String time) {
+		LocalTime localTime;
+		
+		try {
+		localTime = LocalTime.parse(time);
+		} catch (Exception e) {
+			System.out.println("Hora inválida: " + time);
+			return;
+		}
+		
+//		if(localTime.isValid()) {
+//			
+//		}
+	}
 	
 	public Horario(String path, List<Integer> fieldOrder) {
 		this.fieldOrder=fieldOrder;
