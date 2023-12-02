@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 class TestSelenium {
@@ -16,7 +17,7 @@ class TestSelenium {
 
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
-		driver=new FirefoxDriver();
+		driver=new ChromeDriver();
 	}
 
 	@AfterAll
@@ -32,7 +33,7 @@ class TestSelenium {
 
 	@Test
 	void test() {
-//		driver.get("https://www.google.com/");
+//		driver.get("https://www.google.com/"); //por link do nosso site
 //
 //		 //driver.manage().timeouts().implicitlyWait(Duration.ofMillis(500));
 //		
