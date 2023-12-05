@@ -5,6 +5,7 @@ package pt.iscte_iul.ista.grupoM.projetoES;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.io.File;
 import java.time.LocalTime;
 
 import org.junit.jupiter.api.AfterAll;
@@ -60,7 +61,7 @@ class HorarioTest {
 		
 	//	Horario h = new Horario(time);
 		
-		LocalTime accurateTime = test.horario(time);
+		LocalTime accurateTime = test.getLocalTime();
 		
 		assertEquals(exptdTime, accurateTime, "Time mismatch: Expected time and returned time are differents");
 	}
@@ -71,26 +72,10 @@ class HorarioTest {
 	@Test
 	final void testGetPath() {
 		Horario test1 = new Horario();
-	//	String exptdPath = ; inserir o path esperado para comparar
+		String exptdPath = System.getProperty("user.dir") + File.separator + "output.html"; //inserir o path esperado para comparar
 		String correctPath = test1.getPath();
 		
-//		assertTrue(correctPath.equals(exptdPath), "Path mismatch");
-	}
-
-	/**
-	 * Test method for {@link pt.iscte_iul.ista.grupoM.projetoES.Horario#readCSV(java.lang.String)}.
-	 */
-//	@Test
-//	final void testReadCSV() throws IOException {
-//		List<String[]> records = Horario.readCSV
-//	}
-
-	/**
-	 * Test method for {@link pt.iscte_iul.ista.grupoM.projetoES.Horario#writeTabulatorHTML(java.util.List, int)}.
-	 */
-	@Test
-	final void testWriteTabulatorHTML() {
-		fail("Not yet implemented"); // TODO
+		assertEquals(correctPath, exptdPath, "Path mismatch");
 	}
 
 }

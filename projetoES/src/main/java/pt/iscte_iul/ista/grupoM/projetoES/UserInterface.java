@@ -29,7 +29,7 @@ public class UserInterface {
 	private String htmlPath;
 	private String csvPath;
 	private List<Integer> fieldOrder;
-	private Horario reader;
+	private ReadCSV reader;
 
 	public UserInterface() {
 		pathWindow = new JFrame("main");
@@ -79,8 +79,8 @@ public class UserInterface {
 	}
 
 	private void useCsvPath(String path) {
-		reader = new Horario(path, fieldOrder);
-		htmlPath = reader.getPath();
+		reader = new ReadCSV(path, fieldOrder);
+		htmlPath = reader.getHtmlPath();
 		try {
 			openBrowser();
 		} catch (IOException e) {
