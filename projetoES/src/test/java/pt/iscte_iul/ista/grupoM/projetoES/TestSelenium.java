@@ -14,6 +14,17 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 class TestSelenium {
 	
 	static WebDriver driver;
+	Horario h;
+
+	
+	 public Horario getH() {
+		return h;
+	}
+
+	public void setH(Horario h) {
+		this.h = h;
+	}
+
 
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
@@ -22,28 +33,32 @@ class TestSelenium {
 
 	@AfterAll
 	static void tearDownAfterClass() throws Exception {
-//		try {
-//			Thread.sleep(200);			//isto está em milisegundos
-//			} catch (InterruptedException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
+		try {
+			Thread.sleep(200);			//isto está em milisegundos
+			} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		 driver.quit();
 	}
 
 	@Test
 	void test() {
-//		driver.get("https://www.google.com/"); //por link do nosso site
-//
-//		 //driver.manage().timeouts().implicitlyWait(Duration.ofMillis(500));
-//		
-//		 WebElement textBox = driver.findElement(By.name("q"));
-//	        WebElement submitButton = driver.findElement(By.name("btnK"));
+		driver.get(getH().getPath()); //por link do nosso site
+
+		 //driver.manage().timeouts().implicitlyWait(Duration.ofMillis(500));
+////		
+////		 WebElement textBox = driver.findElement(By.name("q"));
+////	        WebElement submitButton = driver.findElement(By.name("btnK"));
 //
 //	       textBox.sendKeys("iscte-iul.pt");
 //	       submitButton.click();
-//
-//	       driver.getTitle();
+
+	       String title = driver.getTitle();
+	       if (title == "Horario ISCTE-IUL") {
+	    	   System.out.println("titulo");
+	       }
+//	       
 	}
 
 }

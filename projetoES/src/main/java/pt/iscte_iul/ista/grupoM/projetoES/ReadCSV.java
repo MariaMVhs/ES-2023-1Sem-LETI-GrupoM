@@ -16,6 +16,7 @@ import java.util.List;
 
 
 public class ReadCSV {
+	//é aula 
 	
 	private List<Integer> fieldOrder;
 	private String htmlPath;
@@ -175,7 +176,7 @@ public class ReadCSV {
      * @throws IOException se ocorrer um erro ao ler o arquivo CSV.
      */
     public List<CSVRecord> readCSV(String source) throws IOException {
-    	
+    //readHorario
     	//variavel que guarda o PATH do ficheiro
         Reader reader;
         
