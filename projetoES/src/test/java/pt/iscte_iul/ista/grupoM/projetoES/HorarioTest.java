@@ -50,12 +50,12 @@ class HorarioTest {
 	}
 
 	/**
-	 * Test method for {@link pt.iscte_iul.ista.grupoM.projetoES.Horario#Horario(java.lang.String, java.util.List)}.
+	 * Test method for {@link pt.iscte_iul.ista.grupoM.projetoES.Horario_old#Horario(java.lang.String, java.util.List)}.
 	 */
 	
 	@Test
 	final void testHorario() {
-		Horario test = new Horario(); 
+		Horario_old test = new Horario_old(); 
 		String time = "13:30:00";
 		LocalTime exptdTime = LocalTime.parse(time);
 		
@@ -67,11 +67,11 @@ class HorarioTest {
 	}
 
 	/**
-	 * Test method for {@link pt.iscte_iul.ista.grupoM.projetoES.Horario#getPath()}.
+	 * Test method for {@link pt.iscte_iul.ista.grupoM.projetoES.Horario_old#getPath()}.
 	 */
 	@Test
 	final void testGetPath() {
-		Horario test1 = new Horario();
+		Horario_old test1 = new Horario_old();
 		String exptdPath = System.getProperty("user.dir") + File.separator + "output.html"; //inserir o path esperado para comparar
 		String correctPath = test1.getPath();
 		
