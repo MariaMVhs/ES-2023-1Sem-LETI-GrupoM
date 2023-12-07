@@ -74,7 +74,7 @@ public class Horario {
 		}
 		
 		
-		
+		// verifica se a hora que foi dada como input está dentro dos parâmetros estabelecidos ou não
 		if(!validTime(localTime)) {
 			System.out.println("Hora inválida: " + time);
 			return null;
@@ -84,6 +84,7 @@ public class Horario {
 		
 	}
 	
+	// garante que as horas dadas como input não estão fora dos padrões do LocalTime
 	public static boolean validTime(LocalTime t) {
 		if(t.equals(LocalTime.MIN) || t.equals(LocalTime.MAX)) {
 			return true;

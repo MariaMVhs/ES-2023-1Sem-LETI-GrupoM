@@ -47,7 +47,7 @@ class ReadCSVTest {
 
 	@Test
 	void testGetRecords() throws IOException {
-		boolean matchingRec = true;
+//		boolean matchingRec = true;
 		
 		String tempFile = "tempFile.csv";
 		String[] header = {"Curso", "Unidade Curricular", "Turno","Turma",
@@ -78,7 +78,7 @@ class ReadCSVTest {
 				wr.writeNext(row);
 		}
 		
-		List<CSVRecord> accRecs = ReadCSV.getRecords(tempFile);
+		List<ReadCSV> accRecs = ReadCSV.getRecords(tempFile);
 		
 		List<CSVRecord> exptdRecs = new ArrayList<>();
 		
@@ -91,6 +91,7 @@ class ReadCSVTest {
 		assertEquals(exptdRecs.size(), accRecs.size());
 		
 		for(int i = 0; i < exptdRecs.size(); i++) {
+		//	String[] exptdArray = exptdRecs.get(i);
 		//	assertArrayEquals(exptdRecs.get(i), accRecs.get(i).toArray());
 		}
 			

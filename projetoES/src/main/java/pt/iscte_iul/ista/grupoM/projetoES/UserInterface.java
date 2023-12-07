@@ -124,7 +124,7 @@ public class UserInterface {
 	//funcao para carregar o path do ficherio fornecido
 	 private void showPathInputDialog() throws Exception {
 		 //Abre o pop up para inserir o path
-		 String path = JOptionPane.showInputDialog(UserInterface.this, "Enter file path:");
+		 String path = JOptionPane.showInputDialog(UserInterface.this, "");
 		     
 		 //Verifica se está vazio
 		 if (path != null && !path.isEmpty()) {
