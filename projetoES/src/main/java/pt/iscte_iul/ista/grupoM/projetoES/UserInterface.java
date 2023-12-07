@@ -22,14 +22,14 @@ public class UserInterface {
 	private JFrame pathWindow;
 	private JFrame fieldsWindow;
 	private JFrame changeFieldsWindow;
-	private JButton carregarHorario;
+	private JButton carregarHorario;	//onde há JButton por btn
 	private JButton fieldsManter;
 	private JButton fieldsAlterar;
 	private JButton quit;
 	private String htmlPath;
 	private String csvPath;
 	private List<Integer> fieldOrder;
-	private Horario reader;
+	private ReadCSV reader; //salas iscte
 
 	public UserInterface() {
 		pathWindow = new JFrame("main");
@@ -79,8 +79,8 @@ public class UserInterface {
 	}
 
 	private void useCsvPath(String path) {
-		reader = new Horario(path, fieldOrder);
-		htmlPath = reader.getPath();
+		reader = new ReadCSV(path, fieldOrder);
+		htmlPath = reader.getHtmlPath();
 		try {
 			openBrowser();
 		} catch (IOException e) {
@@ -124,8 +124,8 @@ public class UserInterface {
 	//funcao para carregar o path do ficherio fornecido
 	 private void showPathInputDialog() throws Exception {
 		 //Abre o pop up para inserir o path
-		 String path = JOptionPane.showInputDialog(UserInterface.this, "Enter file path:");
-		     
+		 String path = JOptionPane.showInputDialog(UserInterface.this, "");
+		  //USAR jFileChooser   
 		 //Verifica se está vazio
 		 if (path != null && !path.isEmpty()) {
 	        csvPath = path;
@@ -349,7 +349,9 @@ public class UserInterface {
 		changeFieldsWindow.add(sala);
 
 	}
-
+	
+	//termina a aplicação 
+	
 	private void setupQuit() {
 		quit = new JButton("Cancel");
 		quit.addActionListener(new ActionListener() {
