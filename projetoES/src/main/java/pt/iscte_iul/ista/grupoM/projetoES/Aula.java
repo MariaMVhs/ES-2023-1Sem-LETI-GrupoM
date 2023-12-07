@@ -3,12 +3,24 @@
  */
 package pt.iscte_iul.ista.grupoM.projetoES;
 
+import java.util.List;
+
 /**
  * 
  */
 public class Aula {
-	// campos que estão no ficheiro
-	
+
+	private String curso;
+	private String unidadeCurricular;
+	private String turno;
+	private String turma;
+	private int inscritosNoTurno;
+	private String diaDaSemana;
+	private String horaInicioAula;
+	private String horaFimAula;
+	private String dataAula;
+	private String caracteristicasSalaPedida;
+	private String salaAtribuida;
 	
 	
 	
