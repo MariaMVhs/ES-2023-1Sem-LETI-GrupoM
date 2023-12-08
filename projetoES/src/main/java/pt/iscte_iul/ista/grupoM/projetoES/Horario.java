@@ -62,10 +62,6 @@ public class Horario {
 		return aulas;
 	}
 
-	public void printHorario(){ 
-		for(Aula aula : aulas_iscte) {
-			System.out.println(aula);
-		}
-	}
+	
 	
 }
