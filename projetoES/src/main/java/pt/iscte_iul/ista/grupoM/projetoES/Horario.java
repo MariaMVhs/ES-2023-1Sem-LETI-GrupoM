@@ -3,6 +3,7 @@ package pt.iscte_iul.ista.grupoM.projetoES;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -43,7 +44,7 @@ public class Horario {
      * @param file path para CSV.
      * @return a lista de aulas (horario)lidas do CSV.
      */
-	public List<Aula> readHorario(String file) {
+	public List<Aula> readHorario(File file) {
 		
 		List<Aula> aulas = new ArrayList<>();
 		

@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.ArrayList;
 
 import java.io.FileReader;
+import java.io.File;
 import java.io.BufferedReader;
 import java.io.IOException;
 
@@ -32,7 +33,7 @@ public class Salas {
      * @param file path para CSV
      * @return a lista de salas lidas do CSV.
      */
-	public List<Sala> readSalas(String file) {
+	public List<Sala> readSalas(File file) {
 		
 			List<Sala> salas = new ArrayList<>();
 			
