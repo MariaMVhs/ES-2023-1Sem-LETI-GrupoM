@@ -34,10 +34,14 @@ public class Salas {
      * @return a lista de salas lidas do CSV.
      */
 	public List<Sala> readSalas(File file) {
+	// Esta função lê um ficheiro e cria uma lista de objetos do tipo Sala 
+	// Cada linha do ficheiro representa uma sala com os valores separados por ";"
+	public List<Sala> readSalas(String file) {
 		
-			List<Sala> salas = new ArrayList<>();
+			List<Sala> salas = new ArrayList<>(); // cria uma lista do tipo Sala vazia
 			
-		try {
+		try { // try-catch para lidar com possíveis exceções que possam ocorrer durante a 
+			  // leitura do ficheiro fornecido
 			
 			Sala esta_sala;
 			
@@ -48,16 +52,17 @@ public class Salas {
 			BufferedReader buffRead = new BufferedReader(new FileReader(file));
 			
 			String linha = buffRead.readLine();  // lê a 1ª linha do ficheiro
-			String[] atribs = linha.split(";");
-			for (String atrib : atribs) {
-				atributos_salas.add(atrib);
+			String[] atribs = linha.split(";"); // depois da leitura da 1ª linha do file
+												//faz a divisão num array de strings que representam
+												// os nomes das colunas.
+			for (String atrib : atribs) { // para cada string existente em atribs,
+				atributos_salas.add(atrib); //  adiciona à lista atributos_sala
 			}
 			
-			while ((linha = buffRead.readLine()) != null) {
-				//linha =
-				esta_sala = new Sala();
-				esta_sala.set_sala(linha);
-				salas_iscte.add(esta_sala);
+			while ((linha = buffRead.readLine()) != null) { //ciclo while para leitura das restantes linhas
+				esta_sala = new Sala(); // criação de uma nova sala
+				esta_sala.set_sala(linha); // atribuição dos dados da linha atual
+				salas_iscte.add(esta_sala); // adiciona os dados da nova sala à lista de salas do iscte
 			}
 			
 			num_salas = salas_iscte.size();
