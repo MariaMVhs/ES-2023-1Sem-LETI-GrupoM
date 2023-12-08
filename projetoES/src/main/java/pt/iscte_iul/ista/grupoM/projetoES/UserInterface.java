@@ -71,6 +71,8 @@ public class UserInterface {
 		if (result == JFileChooser.APPROVE_OPTION) {
 			java.io.File selectedFile = chooser.getSelectedFile();
 			horario_iscte.readHorario(selectedFile);
+			String htmlPath=HtmlManager.createHtml(horario_iscte);
+			horario_iscte.setHtmlPath(htmlPath);
 		} else {
 			System.out.println("Ficheiro n foi selecionado");
 		}
@@ -110,7 +112,7 @@ public class UserInterface {
 //        Botão para mostrar o horário em html
 		JButton btn_mostrarHorario = new JButton("Ver Horário");
 		btn_mostrarHorario
-				.addActionListener(e -> openBrowser(System.getProperty("user.dir") + File.separator + "output.html"));
+				.addActionListener(e -> HtmlManager.openBrowser(horario_iscte.getHtmlPath()));
 		pnl_start.add(btn_mostrarHorario);
 
 //        Botão para abrir o panel da qualidade do horário
