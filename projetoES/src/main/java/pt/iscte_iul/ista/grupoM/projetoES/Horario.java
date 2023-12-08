@@ -27,9 +27,10 @@ public class Horario {
 	
 	public List<Aula> readHorario(String file) {
 		
-		List<Aula> aulas = new ArrayList<>();
+		List<Aula> aulas = new ArrayList<>(); // Cria nova lista vazia do tipo Aula
 		
-	try {
+	try { // try-catch para lidar com possíveis exceções que possam ocorrer durante a 
+		  // leitura do ficheiro fornecido
 		
 		Aula esta_aula;
 		
@@ -37,22 +38,24 @@ public class Horario {
 		// nomes das colunas
 		// a 1ª linha vai para atributos_aulas
 		
-		BufferedReader buffRead = new BufferedReader(new FileReader(file));
+		BufferedReader buffRead = new BufferedReader(new FileReader(file)); // leitura do ficheiro
 		
-		String linha = buffRead.readLine();  // lê a 1ª linha do ficheiro
-		String[] atribs = linha.split(";");
-		for (String atrib : atribs) {
-			atributos_aulas.add(atrib);
+		String linha = buffRead.readLine();  // lê a 1ª linha do ficheiro e armazena em "linha"
+		String[] atribs = linha.split(";"); // depois da leitura da 1ª linha do file
+											//faz a divisão num array de strings que representam
+											// os nomes das colunas.
+		for (String atrib : atribs) { // percorre cada string existente no array atribs
+			atributos_aulas.add(atrib); // adiciona à string atrib  o conjunto de strings atributos_aulas
 		}
 		
-		while ((linha = buffRead.readLine()) != null) {
-			//linha =
+		while ((linha = buffRead.readLine()) != null) { // ciclo while para ler cada uma das seguintes linhas do file
+														// e armazena em linha, até que se chegue ao final do file
 			esta_aula = new Aula();
-			esta_aula.set_aula(linha);
-			aulas_iscte.add(esta_aula);
+			esta_aula.set_aula(linha); // chama set_aula da classe Aula e passa a linha tual como argumento
+			aulas_iscte.add(esta_aula); // adiciona esta_aula à lista aulas_iscte
 		}
 		
-		num_aulas = aulas_iscte.size();
+		num_aulas = aulas_iscte.size(); // atribuição do número total de aulas lidas do arquivo ao num_aulas.
 		buffRead.close();
 		return aulas_iscte;
 		
