@@ -54,7 +54,7 @@ public class Horario {
 		
 		num_aulas = aulas_iscte.size();
 		buffRead.close();
-
+		return aulas_iscte;
 		
 		}catch (IOException e) {
 			System.out.println("Falha na leitura do arquivo." + e.getMessage());

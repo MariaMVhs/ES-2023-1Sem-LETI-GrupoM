@@ -53,8 +53,6 @@ public class Salas {
 			
 			num_salas = salas_iscte.size();
 			buffRead.close();
-
-			
 			return salas_iscte;
 
 			
