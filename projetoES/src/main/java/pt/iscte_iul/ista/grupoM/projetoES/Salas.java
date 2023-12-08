@@ -54,12 +54,14 @@ public class Salas {
 			num_salas = salas_iscte.size();
 			buffRead.close();
 
+			
+			return salas_iscte;
 
 			
 		}catch (IOException e) {
 			System.out.println("Falha na leitura do arquivo." + e.getMessage());
 		}
-		return salas;
+		return null;
 	}
 	
 	public void printSalas(){
