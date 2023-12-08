@@ -10,7 +10,7 @@ public class GestaoHorarios {
 		
 //		Salas salas_iscte = new Salas();
 //		Horario horario_iscte = new Horario();
-		UserInterface_old window = new UserInterface_old();
+		UserInterface window = new UserInterface();
 //		window.setSalas(salas_iscte);
 //		window.setHorario(horario_iscte);
 //		window.window_readSalas();
