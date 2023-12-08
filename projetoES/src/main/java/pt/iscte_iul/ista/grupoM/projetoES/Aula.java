@@ -3,7 +3,9 @@
  */
 package pt.iscte_iul.ista.grupoM.projetoES;
 
+import java.time.LocalTime;
 import java.util.ArrayList;
+
 import java.util.List;
 
 /**
@@ -13,6 +15,18 @@ public class Aula {
 	
 	private int num_atributos;
 	private List<String> atributos = new ArrayList<>();
+	private String aula_curso;
+	private String aula_UC;
+	private String aula_turno;
+	private String aula_turma;
+	private String aula_iscritosTurno;
+	private String aula_diaSemana;
+	private LocalTime aula_horaInicio;
+	private LocalTime aula_horaFim;
+	private String aula_data;
+	private String aula_carateristicas_sala;
+	private String aula_sala_atribuida;
+	
 	// nota: os nomes desses atributos já estão definidos em Horario
 
 	
@@ -45,6 +59,85 @@ public class Aula {
 			
 	}
 	
+	public String getAula_curso() {
+		if(!atributos.isEmpty()){
+			return atributos.get(0);
+		}
+		return null;
+	}
+
+	public String getAula_UC() {
+		if(!atributos.isEmpty()) {
+			return atributos.get(1);
+		}
+		return null;
+	}
+
+	public String getAula_turno() {
+		if(!atributos.isEmpty()) {
+			return atributos.get(2);
+		}
+		return null;
+	}
+
+	public String getAula_turma() {
+		if(!atributos.isEmpty()) {
+			return atributos.get(3);
+		}
+		return null;
+	}
+
+	public String getAula_iscritosTurno() {
+		if(!atributos.isEmpty()) {
+			return atributos.get(4);
+		}
+		return null;
+	}
+
+	public String getAula_diaSemana() {
+		if(!atributos.isEmpty()) {
+			return atributos.get(5);
+		}
+		return null;
+	}
+
+	public LocalTime getAula_horaInicio() {
+		if(!atributos.isEmpty()) {
+			return LocalTime.parse(atributos.get(6));
+		}
+		return null;
+	}
+
+	public LocalTime getAula_horaFim() {
+		if(!atributos.isEmpty()) {
+			return LocalTime.parse(atributos.get(7));
+		}
+		return null;
+	}
+
+	public String getAula_data() {
+		if(!atributos.isEmpty()) {
+			return atributos.get(8);
+		}
+		return null;
+	}
+
+	public String getAula_carateristicas_sala() {
+		if(!atributos.isEmpty()) {
+			return atributos.get(9);
+		}
+		return null;
+	}
+
+
+	public String getAula_sala_atribuida() {
+		if(!atributos.isEmpty()) {
+			return atributos.get(10);
+		}
+		return null;
+	}
+
+
 	public int getNum_atributos(){
 		return num_atributos;
 	}
