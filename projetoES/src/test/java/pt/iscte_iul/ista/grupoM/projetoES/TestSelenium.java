@@ -2,7 +2,10 @@ package pt.iscte_iul.ista.grupoM.projetoES;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.io.File;
 import java.time.Duration;
+import java.util.List;
+
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -11,10 +14,11 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 
+import dev.failsafe.internal.util.Assert;
+
 class TestSelenium {
 	
 	static WebDriver driver;
-	private Horario horarioTeste = new Horario();
 
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
@@ -34,24 +38,31 @@ class TestSelenium {
 
 	@Test
 	void test() {
-		driver.get(horarioTeste.getHtmlPath()); //por link do nosso site
+		driver.get(System.getProperty("user.dir") + File.separator + "output.html"); //por link do nosso site
 		
 		driver.manage().timeouts().implicitlyWait(Duration.ofMillis(500));
 		
-////		 WebElement textBox = driver.findElement(By.name("q"));
-	        WebElement title = driver.findElement(By.name("Horario ISCTE-IUL"));
-//
-//	       textBox.sendKeys("iscte-iul.pt");
-//	       submitButton.click();
+		String title=  driver.getTitle();
+	      System.out.println(title);
+		
 
-	      driver.getTitle();
-	     	       
+	     //Verifica titulo
+	        WebElement header = driver.findElement(By.cssSelector("h1"));
+	        assertEquals(header.getText(), "Horario ISCTE-IUL");
+
+	      //Verifica tabela
+	        
+	        //vê linhas da tabela
+	        List<WebElement> linhas = driver.findElements(By.cssSelector(".tabulator-row"));
+	        
+	        //verifica se existem dados nas linhas da tabela
+	        for (WebElement linha : linhas) {
+	            List<WebElement> celulas = linha.findElements(By.cssSelector(".tabulator-cell"));
+	            for (WebElement celula : celulas) {
+	                assertTrue(celula.getText().length() > 0);
+	            }
+	        }       
 	}
 	
-//	public static boolean checkTextExists(WebDriver driver, String url, String text) {
-//        driver.get(url);
-//		String pageSource = driver.getPageSource();
-//	    return pageSource.contains("Horario ISCTE-IUL");
-//	}
 
 }

@@ -8,15 +8,6 @@ import java.util.List;
  */
 public class Sala {
 	
-	/**
-	 * Número de atributos da sala.
-	 */
-	private int num_atributos;
-	
-	/**
-	 * Lista de atributos da sala.
-	 */
-	private List<String> atributos = new ArrayList<>();
 	private int num_atributos;
 	private List<String> atributos = new ArrayList<>();
 	private String nome_sala;

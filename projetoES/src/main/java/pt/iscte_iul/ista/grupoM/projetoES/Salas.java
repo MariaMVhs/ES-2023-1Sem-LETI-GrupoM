@@ -29,14 +29,12 @@ public class Salas {
 	
 	
 	/**
-     * Lê as salas de um CSV e adiciona-as à lista de salas.
+     * Esta função lê um ficheiro e cria uma lista de objetos do tipo Sala.
+     * Cada linha do ficheiro representa uma sala com os valores separados por ";"
      * @param file path para CSV
      * @return a lista de salas lidas do CSV.
      */
 	public List<Sala> readSalas(File file) {
-	// Esta função lê um ficheiro e cria uma lista de objetos do tipo Sala 
-	// Cada linha do ficheiro representa uma sala com os valores separados por ";"
-	public List<Sala> readSalas(String file) {
 		
 			List<Sala> salas = new ArrayList<>(); // cria uma lista do tipo Sala vazia
 			

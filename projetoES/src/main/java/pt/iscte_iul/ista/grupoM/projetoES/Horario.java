@@ -38,6 +38,7 @@ public class Horario {
 		return htmlPath;
 	}
 	
+	
 	/**
      * Lê o horário de aulas de um CSV e e adiciona-as à lista de aulas.
      *
