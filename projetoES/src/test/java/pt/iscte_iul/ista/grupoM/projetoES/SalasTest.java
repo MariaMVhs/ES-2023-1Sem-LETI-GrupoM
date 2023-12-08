@@ -38,8 +38,15 @@ class SalasTest {
 		for(Sala sala : salas) {
 			assertTrue(sala.getNome_edificio_sala().length() > 0);
 			assertTrue(sala.getNome_sala().length() > 0);
+		
+			int capacidade_normal = sala.getCapacidade_normal();
+			int capacidade_exame = sala.getCapacidade_exame();
 			
+			assertEquals(sala.getCapacidade_normal(), capacidade_normal);
+			assertEquals(sala.getCapacidade_exame(), capacidade_exame);
 		}
+		
+		
 	}
 
 }

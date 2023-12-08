@@ -68,16 +68,19 @@ public class Sala {
 		}
 		
 
-//		public int getCapacidade_normal() {
-//			if(!atributos.isEmpty()) {
-//				return atributos.get(2);
-//			}
-//			return null;
-//		}
-//
-//		public int getCapacidade_exame() {
-//		return capacidade_exame;
-//	}
+		public int getCapacidade_normal() {
+			if(!atributos.isEmpty()) {
+				return Integer.parseInt(atributos.get(2));
+			}
+			return 0;
+		}
+
+		public int getCapacidade_exame() {
+			if(!atributos.isEmpty()) {
+				return Integer.parseInt(atributos.get(3));
+			}
+			return 0;
+	}
 
 		
 }
