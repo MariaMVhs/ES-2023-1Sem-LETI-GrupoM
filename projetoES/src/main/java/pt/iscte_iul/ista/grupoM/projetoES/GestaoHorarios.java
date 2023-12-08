@@ -9,12 +9,12 @@ public class GestaoHorarios {
 	
 		
 //		Salas salas_iscte = new Salas();
-//		Horario horario_iscte = new Horario();
+		Horario horario_iscte = new Horario();
 		UserInterface window = new UserInterface();
 //		window.setSalas(salas_iscte);
-//		window.setHorario(horario_iscte);
+		window.setHorario(horario_iscte);
 //		window.window_readSalas();
-//		window.window_readHorario();
+		window.window_readHorario();
 		window.start();
 //		salas_iscte.print();
 //		List<Sala> salas = salas_iscte.readSalas("CaracterizaçãoDasSalas.csv");
