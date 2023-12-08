@@ -45,5 +45,12 @@ public class Aula {
 			
 	}
 	
+	public int getNum_atributos(){
+		return num_atributos;
+	}
+	
+	public List<String> getAtributos(){
+		return atributos;
+	}
 	
 }
