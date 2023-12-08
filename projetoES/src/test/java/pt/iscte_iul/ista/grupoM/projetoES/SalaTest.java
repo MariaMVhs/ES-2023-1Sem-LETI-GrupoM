@@ -11,12 +11,6 @@ import org.junit.jupiter.api.Test;
 class SalaTest {
 	
 	private Sala sala;
-	
-	@BeforeAll
-	static void setUpBeforeClass() throws Exception {
-	}
-
-	
 
 	@Test
 	final void testSet_sala() {
