@@ -7,7 +7,9 @@ import java.io.FileReader;
 import java.io.BufferedReader;
 import java.io.IOException;
 
-
+/**
+ * Esta classe representa um conjunto de salas.
+ */
 public class Salas {
 	
 	private int num_salas;
@@ -18,12 +20,18 @@ public class Salas {
 	
 
 	/**
-	 * 
-	 */
+     * Construtor da classe Salas.
+     */
 	public Salas() {
 		num_salas = 0;
 	}
 	
+	
+	/**
+     * Lê as salas de um CSV e adiciona-as à lista de salas.
+     * @param file path para CSV
+     * @return a lista de salas lidas do CSV.
+     */
 	public List<Sala> readSalas(String file) {
 		
 			List<Sala> salas = new ArrayList<>();
@@ -62,6 +70,9 @@ public class Salas {
 		return null;
 	}
 	
+	/**
+     * Imprime as salas.
+     */
 	public void printSalas(){
 		for(Sala sala : salas_iscte) {
 			System.out.println(sala);

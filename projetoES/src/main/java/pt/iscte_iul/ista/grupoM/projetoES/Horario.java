@@ -19,18 +19,30 @@ public class Horario {
 	
 	// controlo pelo indice da lista
 	
-	
+	 /**
+     * Construtor da classe Horario.
+     */
 	public Horario() {
 		num_aulas = 0;
 		atributos_aulas = new ArrayList<>();
 		aulas_iscte = new ArrayList<>();
 	}
 	
+	/**
+     * Retorna o caminho HTML.
+     *
+     * @return String representando o caminho do HTML.
+     */
 	public String getHtmlPath() {
 		return htmlPath;
 	}
 	
-	
+	/**
+     * Lê o horário de aulas de um CSV e e adiciona-as à lista de aulas.
+     *
+     * @param file path para CSV.
+     * @return a lista de aulas (horario)lidas do CSV.
+     */
 	public List<Aula> readHorario(String file) {
 		
 		List<Aula> aulas = new ArrayList<>();
@@ -62,9 +74,9 @@ public class Horario {
 		buffRead.close();
 		return aulas_iscte;
 		
-		}catch (IOException e) {
+	}catch (IOException e) {
 			System.out.println("Falha na leitura do arquivo." + e.getMessage());
-		}
+	}
 		return aulas;
 	}
 
