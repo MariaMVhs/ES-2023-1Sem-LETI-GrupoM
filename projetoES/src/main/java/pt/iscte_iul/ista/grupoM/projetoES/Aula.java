@@ -11,8 +11,8 @@ import java.util.List;
  */
 public class Aula {
 
-	int num_atributos;
-	List<String> atributos = new ArrayList<>();
+	private int num_atributos;
+	private List<String> atributos = new ArrayList<>();
 	// nota: os nomes desses atributos já estão definidos em Horario
 
 	
