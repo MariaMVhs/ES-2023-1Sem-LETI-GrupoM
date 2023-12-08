@@ -17,7 +17,6 @@ public class GestaoHorarios {
 		
 		List<Aula> aulas = horario_iscte.readHorario("HorarioDeExemplo.csv");
 		System.out.println("Número de aulas existentes: " + aulas.size());
-
 	}
 	
 	
