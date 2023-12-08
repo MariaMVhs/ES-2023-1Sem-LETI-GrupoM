@@ -1,241 +1,71 @@
 package pt.iscte_iul.ista.grupoM.projetoES;
 
-//importa bibliotecas para ler o ficheiro CSV
-import org.apache.commons.csv.CSVFormat;
-import org.apache.commons.csv.CSVParser;
-import org.apache.commons.csv.CSVRecord; 
 
-import java.io.File;
+import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
-import java.io.Reader;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-import java.time.LocalTime;
-
-//funcao para ler o ficheiro, guarda o ficheiro numa lista de CSVRecords 
 
 /**
  * Classe de um horario.
  */
 public class Horario {
 	
-	private List<Integer> fieldOrder;
-	private String htmlPath;
-	private LocalTime lt;
-	private String time;
+	private int num_aulas;
+	private List<String> atributos_aulas; // uma lista dos nomes que estão na 1ª linha do csv (file "HorarioDeExemplo")
+	private List<Aula> aulas_iscte; // as aulas: atenção é so a linha em causa (sem os nomes) - a partir da 2ª linha do mesmo ficheiro
 	
-	/**
-     * Construtor da classe Horario.
-     *
-     * @param path Caminho para o CSV.
-     * @param fieldOrder Ordem dos campos no arquivo CSV.
-     */
+	// controlo pelo indice da lista
+	
 	
 	public Horario() {
+		num_aulas = 0;
+		atributos_aulas = new ArrayList<>();
+		aulas_iscte = new ArrayList<>();
+	}
+	
+	public List<Aula> readHorario(String file) {
 		
-	}
-	
-	public Horario(String time) {
-		this.time = time;	
-	}
-	
-	public LocalTime getLocalTime() {
-		return lt;
-	}
-	
-//	public Horario(String path, List<Integer> fieldOrder) {
-//		this.fieldOrder=fieldOrder;
-//        List<CSVRecord> records;
-//        
-//		try {
-//			records = readCSV(path);
-//	        writeTabulatorHTML(reorderFields(records),20);
-//	        htmlPath = System.getProperty("user.dir") + File.separator + "output.html";
-//		} catch (IOException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//		
-//	}
-	
-	
-	public LocalTime horario(String time) {
-		LocalTime localTime;
+		List<Aula> aulas = new ArrayList<>();
 		
-		try {
-		localTime = LocalTime.parse(time);
-		} catch (Exception e) {
-			System.out.println("Hora inválida: " + time);
-			return null;
+	try {
+		
+		Aula esta_aula;
+		
+		// ler a 1ª linha e vai para um vector de strings. São os
+		// nomes das colunas
+		// a 1ª linha vai para atributos_aulas
+		
+		BufferedReader buffRead = new BufferedReader(new FileReader(file));
+		
+		String linha = buffRead.readLine();  // lê a 1ª linha do ficheiro
+		String[] atribs = linha.split(";");
+		for (String atrib : atribs) {
+			atributos_aulas.add(atrib);
 		}
 		
-		
-		// verifica se a hora que foi dada como input está dentro dos parâmetros estabelecidos ou não
-		if(!validTime(localTime)) {
-			System.out.println("Hora inválida: " + time);
-			return null;
+		while ((linha = buffRead.readLine()) != null) {
+			//linha =
+			esta_aula = new Aula();
+			esta_aula.set_aula(linha);
+			aulas_iscte.add(esta_aula);
 		}
 		
-		return localTime;
-		
-	}
-	
-	// garante que as horas dadas como input não estão fora dos padrões do LocalTime
-	public static boolean validTime(LocalTime t) {
-		if(t.equals(LocalTime.MIN) || t.equals(LocalTime.MAX)) {
-			return true;
-		}else if(t.equals(LocalTime.of(24, 0, 0))){
-			return false;
-		}
-		return true;
-		
-	}
-	
-	/**
-     * Retorna o caminho para o HTML gerado.
-     *
-     * @return O caminho para o HTML gerado.
-     */
-    public String getPath() {
-        return htmlPath;
-    }
+		num_aulas = aulas_iscte.size();
+		buffRead.close();
 
-    /**
-     * Reordena os campos de um CSV.
-     *
-     * @param rec lista de registos CSV.
-     * @return lista de registos CSV com os campos reordenados.
-     */
-    private List<String[]> reorderFields(List<CSVRecord> rec){
-    	
-        List<String[]> reorderedFile = new ArrayList<String[]>();
-        for(int i = 0; i<rec.size(); i++) {
-            String[] line = new String[fieldOrder.size()];
-            for(int j=0; j<fieldOrder.size(); j++){
-                line[j]=rec.get(i).get(fieldOrder.get(j));
-            }
-            reorderedFile.add(line);
-        }
-        return reorderedFile;
-    }
-    
-//    /**
-//     * Le um CSV e retorna uma lista de registos CSV.
-//     *
-//     * @param source e o caminho do CSV.
-//     * @return uma lista de registos CSV.
-//     * @throws IOException se ocorrer um erro ao ler o arquivo CSV.
-//     */
-//    public List<CSVRecord> readCSV(String source) throws IOException {
-//    	
-//    	//variavel que guarda o PATH do ficheiro
-//        Reader reader;
-//        
-//        //verifica se é um link para o gitHUB, NAO TESTADO
-//        if (source.startsWith("http")) {
-//            URL url = new URL(source);
-//            reader = new InputStreamReader(url.openStream());
-//        //verifica se é um PATH para a diretoria do ficheiro, NAO TESTADO
-//        } else if (source.equals("user")) {
-//            reader = new InputStreamReader(System.in);
-//        //assume que o ficheiro esta na diretoria do projeto, A FUNCIONAR
-//        } else {
-//            reader = new FileReader(source);
-//        }
-//        
-//        //cria a lista de CSVRecords
-//        try (CSVParser parser = new CSVParser(reader, CSVFormat.DEFAULT.withDelimiter(';'))) {
-//            return parser.getRecords();
-//        }
-//    }
-//    
-    
-//    public static List<Horario> getRecords(String source) throws IOException{
-//    	FileReader read = new FileReader(source);
-//    	CSVParser parser = new CSVParser(read, CSVFormat.DEFAULT.withHeader("Curso", "Unidade Curricular", "Turno",
-//    																		"Turma", "Inscritos no turno", "Dia da semana" ,
-//    																		"Hora início da aula" , "Hora fim da aula", 
-//    																		"Características da sala pedida para a aula", 
-//    																		"Sala atribuída à aula"));
-//    	List<Horario> records = new ArrayList<>();
-//    	for(CSVRecord rec : parser) {
-//    		Horario h = new Horario();
-//    		h.setCurso(rec.get("Curso"))
-//    	}
-//    }
-    
-    	
-//    /**
-//     * Escreve uma tabela HTML a partir de uma lista de registos CSV.
-//     *
-//     * @param records lista de registos CSV.
-//     * @param pageSize tamanho da pagina HTML.
-//     * @throws IOException se ocorrer um erro ao escrever a tabela HTML.
-//     */
-//    public static void writeTabulatorHTML(List<String[]> records, int pageSize) throws IOException {
-//    	//inicia HTML
-//        try (PrintWriter writer = new PrintWriter("output.html")) {
-//            writer.println("<!DOCTYPE html>");
-//            writer.println("<html>");
-//            writer.println("<head>");
-//            //link para utilizaçao do tabulator
-//            writer.println("<link href=\"https://unpkg.com/tabulator-tables@5.0.3/dist/css/tabulator.min.css\" rel=\"stylesheet\">");
-//            writer.println("<script src=\"https://unpkg.com/tabulator-tables@5.0.3/dist/js/tabulator.min.js\"></script>");
-//            writer.println("<title>Horario ISCTE-IUL</title>");
-//            writer.println("</head>");
-//            writer.println("<body>");
-//            writer.println("<h1>Horario ISCTE-IUL</h1>");
-//            writer.println("<div id=\"csv-table\"></div>");
-//            //writer.println("<button onclick=\"prevPage()\">Previous Page</button>");
-//            //writer.println("<button onclick=\"nextPage()\">Next Page</button>");
-//            writer.println("<script>");
-//                       
-//            writer.println("var pageSize = " + pageSize + ";");
-//            
-//            //pega na lista de CSVRecords e escreve em HTML, de modo a ser interpretado pelo tabulator ( modo: {col:val} )
-//            writer.println("var data = [");
-//
-//            //percorre a lista e escreve no modo indicado
-//            for (int i = 1; i < records.size(); i++) {
-//                writer.println("{");
-//                String[] record = records.get(i);
-//                for ( int j = 0 ; j < record.length; j++) {
-//                    String header = records.get(0)[j];
-//                    String value = record[j];
-//                    writer.println("\"" + header + "\": \"" + value + "\",");
-//                }
-//                writer.println("},");
-//            }
-//
-//            writer.println("];");
-//
-//           
-//            writer.println("table = new Tabulator(\"#csv-table\", {");
-//            writer.println("data: data,");
-//            writer.println("layout: \"fitDataFill\",");
-//            writer.println("pagination: \"local\",");
-//            writer.println("paginationSize: pageSize,");
-//            
-//            //escreve o nome das colunas, que vai buscar a primeira linha do CSV, neste caso ao index 0 da lista de CSVRecords
-//            writer.println("columns: [");
-//            for (String header : records.get(0)) {
-//                writer.println("{ title: \"" + header + "\", field: \"" + header + "\" },");
-//            }
-//            
-//            writer.println("],");
-//            writer.println("});");
-//            
-//            
-//            //termina o HTML
-//            writer.println("</script>");
-//            writer.println("</body>");
-//            writer.println("</html>");
-//        }
-//
-//        System.out.println("HTML done");
-//    }
+		
+		}catch (IOException e) {
+			System.out.println("Falha na leitura do arquivo." + e.getMessage());
+		}
+		return aulas;
+	}
+
+	public void printHorario(){ 
+		for(Aula aula : aulas_iscte) {
+			System.out.println(aula);
+		}
+	}
+	
 }

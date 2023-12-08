@@ -7,7 +7,7 @@ public class Sala {
 	
 	int num_atributos;
 	List<String> atributos = new ArrayList<>();
-	// nota: os nomes desses atributos já estºao definidos em Salas
+	// nota: os nomes desses atributos já estão definidos em Salas
 	
 	
 		/**

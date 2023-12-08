@@ -43,6 +43,7 @@ public class Salas {
 			for (String atrib : atribs) {
 				atributos_salas.add(atrib);
 			}
+			
 			while ((linha = buffRead.readLine()) != null) {
 				//linha =
 				esta_sala = new Sala();
@@ -51,7 +52,8 @@ public class Salas {
 			}
 			
 			num_salas = salas_iscte.size();
-			
+			buffRead.close();
+
 
 			
 		}catch (IOException e) {
@@ -60,7 +62,7 @@ public class Salas {
 		return salas;
 	}
 	
-	public void printSalas(){ //fazer o mesmo com o horario
+	public void printSalas(){
 		for(Sala sala : salas_iscte) {
 			System.out.println(sala);
 		}
