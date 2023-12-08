@@ -12,6 +12,7 @@ import java.util.List;
  */
 public class Horario {
 	
+	private String htmlPath;
 	private int num_aulas;
 	private List<String> atributos_aulas; // uma lista dos nomes que estão na 1ª linha do csv (file "HorarioDeExemplo")
 	private List<Aula> aulas_iscte; // as aulas: atenção é so a linha em causa (sem os nomes) - a partir da 2ª linha do mesmo ficheiro
@@ -24,6 +25,11 @@ public class Horario {
 		atributos_aulas = new ArrayList<>();
 		aulas_iscte = new ArrayList<>();
 	}
+	
+	public String getHtmlPath() {
+		return htmlPath;
+	}
+	
 	
 	public List<Aula> readHorario(String file) {
 		

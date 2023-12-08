@@ -36,7 +36,7 @@ public class Salas {
 			// nomes das colunas
 			// a 1ª linha vai para atributos_salas
 			
-			BufferedReader buffRead = new BufferedReader(new FileReader("CaracterizaçãoDasSalas.csv"));
+			BufferedReader buffRead = new BufferedReader(new FileReader(file));
 			
 			String linha = buffRead.readLine();  // lê a 1ª linha do ficheiro
 			String[] atribs = linha.split(";");
