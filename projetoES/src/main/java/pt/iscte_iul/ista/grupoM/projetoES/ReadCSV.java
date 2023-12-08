@@ -199,14 +199,14 @@ public class ReadCSV {
     }
     
     
-    public static List<CSVRecord> getRecords(String source) throws IOException{
+    public static List<ReadCSV> getRecords(String source) throws IOException{
     	FileReader read = new FileReader(source);
     	CSVParser parser = new CSVParser(read, CSVFormat.DEFAULT.withHeader("Curso", "Unidade Curricular", "Turno",
     																		"Turma", "Inscritos no turno", "Dia da semana" ,
     																		"Hora início da aula" , "Hora fim da aula", 
     																		"Características da sala pedida para a aula", 
     																		"Sala atribuída à aula"));
-    	List<CSVRecord> records = new ArrayList<>();
+    	List<ReadCSV> records = new ArrayList<>();
     	for(CSVRecord rec : parser) {
     		ReadCSV h = new ReadCSV();
     		h.setCurso(rec.get("Curso"));
@@ -221,7 +221,7 @@ public class ReadCSV {
     		h.setCaracteristicasSalaPedida(rec.get("Características da sala pedida para a aula"));
     		h.setSalaAtribuida(rec.get("Sala atribuída à aula"));
     		
-    		records.add(rec);
+    		records.add(h);
     	}
     	return records;
     }

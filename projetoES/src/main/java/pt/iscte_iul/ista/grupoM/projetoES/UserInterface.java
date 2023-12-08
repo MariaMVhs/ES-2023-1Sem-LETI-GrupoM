@@ -26,14 +26,14 @@ public class UserInterface {
 	private JFrame pathWindow;
 	private JFrame fieldsWindow;
 	private JFrame changeFieldsWindow;
-	private JButton carregarHorario;	//onde há JButton por btn
+	private JButton carregarHorario;
 	private JButton fieldsManter;
 	private JButton fieldsAlterar;
 	private JButton quit;
 	private String htmlPath;
 	private String csvPath;
 	private List<Integer> fieldOrder;
-	private ReadCSV reader; //salas iscte
+	private ReadCSV reader;
 
 	public UserInterface() {
 		window_main = new JFrame();
@@ -93,7 +93,7 @@ public class UserInterface {
 	 private void showPathInputDialog() throws Exception {
 		 //Abre o pop up para inserir o path
 		 String path = JOptionPane.showInputDialog(UserInterface.this, "");
-		  //USAR jFileChooser   
+		     
 		 //Verifica se está vazio
 		 if (path != null && !path.isEmpty()) {
 	        csvPath = path;
@@ -317,9 +317,7 @@ public class UserInterface {
 		changeFieldsWindow.add(sala);
 
 	}
-	
-	//termina a aplicação 
-	
+
 	private void setupQuit() {
 		quit = new JButton("Cancel");
 		quit.addActionListener(new ActionListener() {

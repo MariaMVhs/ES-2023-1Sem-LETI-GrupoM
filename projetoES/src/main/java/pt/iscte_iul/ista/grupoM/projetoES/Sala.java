@@ -1,12 +1,13 @@
 package pt.iscte_iul.ista.grupoM.projetoES;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Sala {
 	
 	int num_atributos;
-	List<String> atributos;
-	// nota: os nomes desses atributos já estºao definidos em Salas
+	List<String> atributos = new ArrayList<>();
+	// nota: os nomes desses atributos já estão definidos em Salas
 	
 	
 		/**

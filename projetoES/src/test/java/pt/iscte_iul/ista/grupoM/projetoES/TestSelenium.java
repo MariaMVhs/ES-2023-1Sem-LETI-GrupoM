@@ -14,17 +14,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 class TestSelenium {
 	
 	static WebDriver driver;
-	Horario_old h;
-
-	
-	 public Horario_old getH() {
-		return h;
-	}
-
-	public void setH(Horario_old h) {
-		this.h = h;
-	}
-
+	private Horario horarioTeste = new Horario();
 
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
@@ -44,10 +34,10 @@ class TestSelenium {
 
 	@Test
 	void test() {
-		driver.get(getH().getPath()); //por link do nosso site
-
+		driver.get(horarioTeste.getHtmlPath()); //por link do nosso site
+		
 		driver.manage().timeouts().implicitlyWait(Duration.ofMillis(500));
-////		
+		
 ////		 WebElement textBox = driver.findElement(By.name("q"));
 	        WebElement title = driver.findElement(By.name("Horario ISCTE-IUL"));
 //
@@ -57,5 +47,11 @@ class TestSelenium {
 	      driver.getTitle();
 	     	       
 	}
+	
+//	public static boolean checkTextExists(WebDriver driver, String url, String text) {
+//        driver.get(url);
+//		String pageSource = driver.getPageSource();
+//	    return pageSource.contains("Horario ISCTE-IUL");
+//	}
 
 }
