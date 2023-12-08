@@ -1,332 +1,237 @@
 package pt.iscte_iul.ista.grupoM.projetoES;
 
+import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Desktop;
+import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
-import java.net.URISyntaxException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.WindowConstants;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class UserInterface {
 
-	private JFrame pathWindow;
-	private JFrame fieldsWindow;
-	private JFrame changeFieldsWindow;
-	private JButton carregarHorario;
-	private JButton fieldsManter;
-	private JButton fieldsAlterar;
-	private JButton quit;
-	private String htmlPath;
-	private String csvPath;
-	private List<Integer> fieldOrder;
-	private ReadCSV reader;
+	private Salas salas_iscte;
+	private Horario horario_iscte;
+	private JFrame frame_main;
+	private JPanel pnl_main;
+	private CardLayout cardLayout;
+
+//	TO DO: meter os botoes de return
 
 	public UserInterface() {
-		window_main = new JFrame();
+		salas_iscte = new Salas();
+		horario_iscte = new Horario();
+		frame_main = new JFrame();
+		pnl_main = new JPanel();
+		cardLayout = new CardLayout();
+		createMainPanel();
 	}
 
-	public void window_setSalas() {
+//	  Apresenta o primeiro panel ao user
+
+	public void start() {
+		frame_main.getContentPane().add(pnl_main);
+		frame_main.setVisible(true);
+	}
+
+//	  Janela para o utilizador dar o ficheiro csv com a informação das Salas
+
+	public void window_readSalas() {
 		JFileChooser chooser = new JFileChooser();
 		FileNameExtensionFilter filter = new FileNameExtensionFilter("CSV Files", "csv");
 		chooser.setFileFilter(filter);
-		int result = chooser.showOpenDialog(window_main);
+		int result = chooser.showOpenDialog(pnl_main);
 		if (result == JFileChooser.APPROVE_OPTION) {
 			java.io.File selectedFile = chooser.getSelectedFile();
-//			salas_iscte.carregar_salas(selectedFile);
+			salas_iscte.readSalas(selectedFile);
 		} else {
 			System.out.println("Ficheiro n foi selecionado");
 //			o ficheiro n foi selecionado
 		}
 	}
 
-	public void window_setHorario() {
+//	  Janela para o utilizador dar o ficheiro csv com a informação do Horario
+
+	public void window_readHorario() {
 		JFileChooser chooser = new JFileChooser();
 		FileNameExtensionFilter filter = new FileNameExtensionFilter("CSV Files", "csv");
 		chooser.setFileFilter(filter);
-		int result = chooser.showOpenDialog(window_main);
+		int result = chooser.showOpenDialog(pnl_main);
 		if (result == JFileChooser.APPROVE_OPTION) {
 			java.io.File selectedFile = chooser.getSelectedFile();
-//			horario_iscte.carregar_salas(selectedFile);
+			horario_iscte.readHorario(selectedFile);
 		} else {
 			System.out.println("Ficheiro n foi selecionado");
-//			o ficheiro n foi selecionado
 		}
 	}
 
-//	Buttons
+//	  Para poder usar as Salas do GestaoHorarios
 
-	//Abre um pop up para inserir o path do fichero
-	private void setupCarregarHorario() {
-		//Carrega um botao
-	    carregarHorario = new JButton("Importar horário");
-	    carregarHorario.addActionListener(new ActionListener() {
-	        
-	    	 @Override
-	         public void actionPerformed(ActionEvent e) {
-	             try {
-	            	//funcao que executa a acao de clicar no botao
-					showPathInputDialog();
-				} catch (Exception e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-	         }
-	         
-	     });
-	 }
-	
-	//funcao para carregar o path do ficherio fornecido
-	 private void showPathInputDialog() throws Exception {
-		 //Abre o pop up para inserir o path
-		 String path = JOptionPane.showInputDialog(UserInterface.this, "");
-		     
-		 //Verifica se está vazio
-		 if (path != null && !path.isEmpty()) {
-	        csvPath = path;
-	        openFieldsWindow();
-	     } else {
-	    	System.out.println("User canceled or entered an empty path");
-	   }
-		        
-	 }
-	
-	
-	private void setupFieldsOpen() {
-		fieldsManter = new JButton("Abrir horário");
-		fieldsManter.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if (fieldOrder == null) {
-					fieldOrder = new ArrayList<Integer>();
-					Integer[] defaultOrder = new Integer[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
-					fieldOrder.addAll(Arrays.asList(defaultOrder));
-				} else if (fieldOrder.size() != 11) {
-					fieldOrder.clear();
-					Integer[] defaultOrder = new Integer[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
-					fieldOrder.addAll(Arrays.asList(defaultOrder));
-				}
-				useCsvPath(csvPath);
-				fieldsWindow.setVisible(false);
-			}
-
-		});
+	public void setSalas(Salas salas_iscte) {
+		this.salas_iscte = salas_iscte;
 	}
 
-	private void setupFieldsAlterar() {
-		fieldsAlterar = new JButton("Alterar");
-		fieldsAlterar.addActionListener(new ActionListener() {
+//	  Para poder usar o Horario do GestaoHorarios
 
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				openChangeFieldsWindow();
-			}
-
-		});
+	public void setHorario(Horario horario_iscte) {
+		this.horario_iscte = horario_iscte;
 	}
 
-	// Default order:
-	// Curso, Unidade Curricular, Turno, Turma, Inscritos no turno, Dia da semana,
-	// Hora início da aula, Hora fim da aula, Data
-	// da aula, Características da sala pedida para a aula, Sala atribuída à aula.
+//	  Cria o frame e o panel que vão guardar todos os outros panels
 
-	private void setupChangeFieldsButtons() {
-		
-		//JButton[] buttons = new JButton[];	
-		fieldOrder = new ArrayList<Integer>();
-		
-		JButton curso = new JButton("Curso");
-		JButton unidadeCurricular = new JButton("Unidade Curricular");
-		JButton turno = new JButton("Turno");
-		JButton turma = new JButton("Turma");
-		JButton inscritos = new JButton("Inscritos no turno");
-		JButton diaSemana = new JButton("Dia da semana");
-		JButton horaInicio = new JButton("Hora início da aula");
-		JButton horaFim = new JButton("Hora fim da aula");
-		JButton data = new JButton("Data da aula");
-		JButton caracteristicas = new JButton("Características da sala pedida para a aula");
-		JButton sala = new JButton("Sala atribuída à aula");
-
-		curso.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				fieldOrder.add(0);
-				curso.setVisible(false);
-				if (fieldOrder.size() == 11) {
-					changeFieldsWindow.setVisible(false);
-				}
-			}
-
-		});
-
-		unidadeCurricular.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				fieldOrder.add(1);
-				unidadeCurricular.setVisible(false);
-				if (fieldOrder.size() == 11) {
-					changeFieldsWindow.setVisible(false);
-				}
-			}
-
-		});
-
-		turno.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				fieldOrder.add(2);
-				turno.setVisible(false);
-				if (fieldOrder.size() == 11) {
-					changeFieldsWindow.setVisible(false);
-				}
-			}
-
-		});
-
-		turma.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				fieldOrder.add(3);
-				turma.setVisible(false);
-				if (fieldOrder.size() == 11) {
-					changeFieldsWindow.setVisible(false);
-				}
-			}
-
-		});
-
-		inscritos.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				fieldOrder.add(4);
-				inscritos.setVisible(false);
-				if (fieldOrder.size() == 11) {
-					changeFieldsWindow.setVisible(false);
-				}
-			}
-
-		});
-
-		diaSemana.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				fieldOrder.add(5);
-				diaSemana.setVisible(false);
-				if (fieldOrder.size() == 11) {
-					changeFieldsWindow.setVisible(false);
-				}
-			}
-
-		});
-
-		horaInicio.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				fieldOrder.add(6);
-				horaInicio.setVisible(false);
-				if (fieldOrder.size() == 11) {
-					changeFieldsWindow.setVisible(false);
-				}
-			}
-
-		});
-
-		horaFim.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				fieldOrder.add(7);
-				horaFim.setVisible(false);
-				if (fieldOrder.size() == 11) {
-					changeFieldsWindow.setVisible(false);
-				}
-			}
-
-		});
-
-		data.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				fieldOrder.add(8);
-				data.setVisible(false);
-				if (fieldOrder.size() == 11) {
-					changeFieldsWindow.setVisible(false);
-				}
-			}
-
-		});
-
-		caracteristicas.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				fieldOrder.add(9);
-				caracteristicas.setVisible(false);
-				if (fieldOrder.size() == 11) {
-					changeFieldsWindow.setVisible(false);
-				}
-			}
-
-		});
-
-		sala.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				fieldOrder.add(10);
-				sala.setVisible(false);
-				if (fieldOrder.size() == 11) {
-					changeFieldsWindow.setVisible(false);
-				}
-			}
-
-		});
-
-		changeFieldsWindow.add(curso);
-		changeFieldsWindow.add(unidadeCurricular);
-		changeFieldsWindow.add(turno);
-		changeFieldsWindow.add(turma);
-		changeFieldsWindow.add(inscritos);
-		changeFieldsWindow.add(diaSemana);
-		changeFieldsWindow.add(horaInicio);
-		changeFieldsWindow.add(horaFim);
-		changeFieldsWindow.add(data);
-		changeFieldsWindow.add(caracteristicas);
-		changeFieldsWindow.add(sala);
-
+	private void createMainPanel() {
+		frame_main.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame_main.setSize(600, 200);
+		frame_main.setLocationRelativeTo(null);
+		pnl_main.setLayout(cardLayout);
+		pnl_main.add(createStartPanel(), "start");
+		pnl_main.add(createMudarOrdemPanel(), "ordem");
+		pnl_main.add(createMostrarQualidadePanel(), "qualidade");
+		pnl_main.add(createInserirMetricaPanel(), "inserir metrica");
 	}
 
-	private void setupQuit() {
-		quit = new JButton("Cancel");
-		quit.addActionListener(new ActionListener() {
+//	  Primeiro panel que aparece
+//	  TO DO: ir buscar o path do html à class que o criou, ou dizer a essa mesma class para abrir o html
 
+	private JPanel createStartPanel() {
+		JPanel pnl_start = new JPanel(new GridLayout(1, 0));
+
+//        Botão para mostrar o horário em html
+		JButton btn_mostrarHorario = new JButton("Ver Horário");
+		btn_mostrarHorario
+				.addActionListener(e -> openBrowser(System.getProperty("user.dir") + File.separator + "output.html"));
+		pnl_start.add(btn_mostrarHorario);
+
+//        Botão para abrir o panel da qualidade do horário
+		JButton btn_qualidade = new JButton("Ver Qualidade");
+		btn_qualidade.addActionListener(e -> cardLayout.show(pnl_main, "qualidade"));
+		pnl_start.add(btn_qualidade);
+
+//        Botão para indicar a ordem os campos do ficheiro csv
+		JButton btn_ordem = new JButton("Alterar Ordem");
+		btn_ordem.addActionListener(e -> cardLayout.show(pnl_main, "ordem"));
+		pnl_start.add(btn_ordem);
+		return pnl_start;
+	}
+
+//	  Panel para indicar a ordem dos campos no ficheiro csv
+
+	private JPanel createMudarOrdemPanel() {
+		JPanel panel = new JPanel(new GridLayout(2, 1));
+		panel.add(new JLabel("por implementar"));
+		JButton btn_return = new JButton("voltar");
+		btn_return.addActionListener(e -> cardLayout.show(pnl_main, "start"));
+		panel.add(btn_return);
+		return panel;
+	}
+
+//	  Panel para mostrar a qualidade do horario
+
+	private JPanel createMostrarQualidadePanel() {
+		JPanel panel = new JPanel(new GridLayout(3, 1));
+		JButton btn_inserirMetrica = new JButton("Inserir Metrica");
+		btn_inserirMetrica.addActionListener(e -> cardLayout.show(pnl_main, "inserir metrica"));
+		panel.add(new JLabel("por implementar"));
+		panel.add(btn_inserirMetrica);
+		JButton btn_return = new JButton("voltar");
+		btn_return.addActionListener(e -> cardLayout.show(pnl_main, "start"));
+		panel.add(btn_return);
+		return panel;
+	}
+
+//	  Panel para inserir uma metrica de avaliação
+
+	private JPanel createInserirMetricaPanel() {
+		JPanel pnl_principal = new JPanel(new GridLayout(4, 1));
+
+//		  Espaço para inserir o nome da formula
+		JPanel pnl_upper = new JPanel(new FlowLayout(FlowLayout.LEADING));
+		JLabel label_name = new JLabel("Nome da metrica: ");
+		JTextField input_name = new JTextField(5);
+		pnl_upper.add(label_name);
+		pnl_upper.add(input_name);
+		pnl_principal.add(pnl_upper);
+
+//        Campo de texto para inserir a formula
+		JPanel pnl_middle = new JPanel(new BorderLayout());
+		JTextField input_formula = new JTextField(20);
+		input_formula.setText("fieldA - fieldB < 0");
+		pnl_middle.add(input_formula, BorderLayout.CENTER);
+		pnl_principal.add(pnl_middle);
+
+		JPanel pnl_bottom = new JPanel(new GridLayout(1, 2));
+		JPanel pnl_bottom_right = new JPanel(new FlowLayout(FlowLayout.TRAILING));
+		JPanel pnl_bottom_left = new JPanel(new FlowLayout(FlowLayout.LEADING));
+		pnl_bottom.add(pnl_bottom_left);
+		pnl_bottom.add(pnl_bottom_right);
+
+//        Lista dropdown com os campos de Sala e Aula
+		String[] fieldNames = { "fieldA", "fieldB", "fieldC" }; // Adicionar os nomes dos fields
+		JComboBox fieldDropdown = new JComboBox<>(fieldNames);
+		pnl_bottom_left.add(fieldDropdown);
+
+//        Botão para adicionar o campo escolhido da lista
+		JButton addButton = new JButton("Add");
+		addButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				System.exit(0);
+				// Append selected field to the formula text box
+				String selectedField = (String) fieldDropdown.getSelectedItem();
+				input_formula.setText(input_formula.getText() + selectedField);
 			}
-
 		});
+		pnl_bottom_left.add(addButton);
+
+//        Botão para submeter a formula
+//		  TO DO: Enviar formula para o HorarioRater.validadeFormula()
+		JButton btn_submit = new JButton("Submit");
+		btn_submit.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String formula = input_formula.getText();
+//				if(horarioRater.validateFormula()){
+//					metricaNome=input_name.getText();
+//					Metrica input_metrica=new Metrica(metricaNome, formula);
+//					horarioRater.add(input_metrica);
+//				} else {
+//					mensagem a avisar user que a formula é inválida
+				System.out.println("Submitted Formula: " + formula);
+			}
+		});
+		pnl_bottom_right.add(btn_submit);
+
+		pnl_principal.add(pnl_bottom);
+
+		JButton btn_return = new JButton("voltar");
+		btn_return.addActionListener(e -> cardLayout.show(pnl_main, "qualidade"));
+		pnl_principal.add(btn_return);
+
+		return pnl_principal;
+	}
+
+//	  Abrir o browser pela path do html criado
+
+	private void openBrowser(String htmlPath) {
+
+		Desktop desktop = Desktop.isDesktopSupported() ? Desktop.getDesktop() : null;
+		if (desktop != null && desktop.isSupported(Desktop.Action.BROWSE)) {
+			try {
+				desktop.browse(new File(htmlPath).toURI());
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 }
