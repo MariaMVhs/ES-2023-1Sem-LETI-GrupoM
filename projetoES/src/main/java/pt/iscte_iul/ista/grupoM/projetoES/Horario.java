@@ -34,7 +34,7 @@ public class Horario {
 	/**
 	 * Retorna o caminho HTML.
 	 *
-	 * @return String representando o caminho do HTML.
+	 * @return String que e o caminho HTML.
 	 */
 	public String getHtmlPath() {
 		return htmlPath;
@@ -42,10 +42,10 @@ public class Horario {
 	
 	
 	/**
-	 * Lê o horário de aulas de um CSV e e adiciona-as à lista de aulas.
+	 * Le o horario de aulas de um CSV e e adiciona-as lista de aulas.
 	 *
 	 * @param file path para CSV.
-	 * @return a lista de aulas (horario)lidas do CSV.
+	 * @return a lista de aulas (horario) lidas do CSV.
 	 */
 	public List<Aula> readHorario(File file) {
 		
@@ -91,22 +91,48 @@ public class Horario {
 		this.htmlPath=htmlPath;
 	}
 
+	/**
+	 * Retorna o numero de aulas.
+	 *
+	 * @return o numero de aulas.
+	 */
 	public int getNum_aulas() {
 		return num_aulas;
 	}
-
+	
+	/**
+	 * Retorna a aula.
+	 *
+	 * @return a aula.
+	 */
 	public Aula getAula(int index) {
 		return aulas_iscte.get(index);
 	}
-
+	
+	/**
+	 * Retorna a lista das aulas.
+	 *
+	 * @return a lista das aulas.
+	 */
 	public List<Aula> getAulas() {
 		return aulas_iscte;
 	}
-
+	
+	
+	/**
+	 * Retorna a lista de atributos das aulas.
+	 *
+	 * @return a lista de atributos das aulas.
+	 */
 	public List<String> getAtributos_aulas() {
 		return atributos_aulas;
 	}
-
+	
+	
+	/**
+	 * Faz print do horario
+	 *
+	 */
 	public void printHorario() {
 		for (Aula aula : aulas_iscte) {
 			System.out.println(aula);
