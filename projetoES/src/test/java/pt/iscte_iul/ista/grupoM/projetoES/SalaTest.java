@@ -2,6 +2,9 @@ package pt.iscte_iul.ista.grupoM.projetoES;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
@@ -35,36 +38,34 @@ class SalaTest {
         
         assertEquals("Ala Autónoma (ISCTE-IUL)", sala3.getNome_edificio_sala());
         assertEquals("AA3.23", sala3.getNome_sala());
-        assertEquals(50, sala3.getCapacidade_normal());
+        assertEquals(50,sala3.getCapacidade_normal());
         assertEquals(23, sala3.getCapacidade_exame());
-       
-        
-//        //para falhar
-//        assertEquals("Ala Autónoma (ISCTE-IUL)", sala.getNome_edificio_sala());
-//        assertEquals("AA3.23", sala.getNome_sala());
-//        assertEquals(50, sala.getCapacidade_normal());
-//        assertEquals(23, sala.getCapacidade_exame());
-//        
+             
 	}
 
-//	@Test
-//	final void testGetNome_edificio_sala() {
-//		fail("Not yet implemented"); // TODO
-//	}
-//
-//	@Test
-//	final void testGetNome_sala() {
-//		fail("Not yet implemented"); // TODO
-//	}
-//
-//	@Test
-//	final void testGetCapacidade_normal() {
-//		fail("Not yet implemented"); // TODO
-//	}
-//
-//	@Test
-//	final void testGetCapacidade_exame() {
-//		fail("Not yet implemented"); // TODO
-//	}
+	@Test
+	final void testGetNome_edificio_sala() {
+		sala = new Sala();
+		assertNull(sala.getNome_edificio_sala());
+	}
+		
+
+	@Test
+	final void testGetNome_sala() {
+		sala = new Sala();
+		assertNull(sala.getNome_sala());	
+	}
+
+	@Test
+	final void testGetCapacidade_normal() {
+		sala = new Sala();
+        assertEquals(0, sala.getCapacidade_normal());
+	}
+
+	@Test
+	final void testGetCapacidade_exame() {
+		sala = new Sala();
+		assertEquals(0, sala.getCapacidade_exame());	
+	}
 
 }
