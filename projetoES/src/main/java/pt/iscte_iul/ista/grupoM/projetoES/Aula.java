@@ -14,7 +14,7 @@ import java.util.List;
 public class Aula {
 	
 	private int num_atributos;
-	private List<String> atributos = new ArrayList<>();
+	private List<String> atributos;
 	private String aula_curso;
 	private String aula_UC;
 	private String aula_turno;
@@ -35,6 +35,7 @@ public class Aula {
      */
 	public Aula() {
 		num_atributos = 0;
+		atributos = new ArrayList<>();
 
 	}
 	

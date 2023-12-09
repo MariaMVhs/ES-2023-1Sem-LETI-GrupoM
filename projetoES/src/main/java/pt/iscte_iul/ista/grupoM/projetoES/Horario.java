@@ -17,6 +17,7 @@ public class Horario {
 	private List<String> atributos_aulas; // uma lista dos nomes que estão na 1ª linha do csv (file "HorarioDeExemplo")
 	private List<Aula> aulas_iscte; // as aulas: atenção é so a linha em causa (sem os nomes) - a partir da 2ª linha
 									// do mesmo ficheiro
+	private int num_atributos;
 
 	// controlo pelo indice da lista
 
@@ -24,6 +25,7 @@ public class Horario {
 	 * Construtor da classe Horario.
 	 */
 	public Horario() {
+		num_atributos = 11;
 		num_aulas = 0;
 		atributos_aulas = new ArrayList<>();
 		aulas_iscte = new ArrayList<>();
