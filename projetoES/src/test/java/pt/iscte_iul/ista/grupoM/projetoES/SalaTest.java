@@ -67,5 +67,14 @@ class SalaTest {
 		sala = new Sala();
 		assertEquals(0, sala.getCapacidade_exame());	
 	}
+	
+	@Test
+	final void testGetAtributos() {
+		sala = new Sala();
+        sala.set_sala("Edifício II (ISCTE-IUL);C2.03;6;0");
+        List<String> atributos = sala.getAtributos();
+
+        assertEquals("Edifício II (ISCTE-IUL);C2.03;6;0", atributos);
+	}
 
 }
