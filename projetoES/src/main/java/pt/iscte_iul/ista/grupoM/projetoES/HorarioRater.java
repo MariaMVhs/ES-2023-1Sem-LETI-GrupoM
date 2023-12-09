@@ -1,60 +1,64 @@
 package pt.iscte_iul.ista.grupoM.projetoES;
 
-import org.apache.commons.csv.CSVFormat;
-import org.apache.commons.csv.CSVParser;
-import org.apache.commons.csv.CSVRecord;
-
-import java.io.File;
-//import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-//import java.io.InputStreamReader;
-//import java.io.PrintWriter;
-import java.io.Reader;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class HorarioRater {
 
-	private List<CSVRecord> salas;
-	private List<String[]> horario;
-	private Storage storage;
+	private Salas salas_iscte;
+	private Horario horario_iscte;
 	private List<Metrica> metricas;
 	private List<String> fields;
 	private List<String> operators;
+	private Map<String, String> replacementMap;
 
-	HorarioRater(Horario horario) {
-//		this.horario=horario.getList();
-		readSalas();
-		metricas = new ArrayList<Metrica>();
-		storage = new Storage(this.horario, salas);
+	HorarioRater(Salas salas_iscte, Horario horario_iscte) {
+		
+		this.salas_iscte = salas_iscte;
+		this.horario_iscte = horario_iscte;
+		
+		metricas = new ArrayList<Metrica>();	//lista com as metricas guardadas
+		fields = new ArrayList<String>();		//lista com os atributos de Sala e Aula
+		operators = new ArrayList<String>();	//lista com os operadores possiveis
+        replacementMap = new HashMap<>();		//mapa com as substituições para o rewrite_formula
+        
+        int n=0;
+        for(String atrib_aula : horario_iscte.getAtributos_aulas()){
+        	fields.add("a." + n);
+        	replacementMap.put(atrib_aula, "a." + n);
+        	n++;
+        }
+        n=0;
+        for(String atrib_sala : salas_iscte.getAtributos_salas()){
+        	fields.add("s." + n);
+        	replacementMap.put(atrib_sala, "s." + n);
+        	n++;
+        }
+        operators.addAll(Arrays.asList("+", "-", "*", "/", "==", "<", ">", "<=", ">="));
 	}
-
-	//unsure how we're supposed to get the file with the classrooms' info
-	private void readSalas() {
-		Reader reader;
-		try {
-			reader = new FileReader(System.getProperty("user.dir") + File.separator + "CaracterizaçãoDasSalas");
-			CSVParser parser = new CSVParser(reader, CSVFormat.DEFAULT.withDelimiter(';'));
-			salas = parser.getRecords();
-			parser.close();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
+	
+//	  Cria e guarda a metrica
 
 	public void addMetrica(String name, String formula) {
-		if (validateFormula(formula)) {
-			Metrica metrica = new Metrica(name, formula, storage);
-			metricas.add(metrica);
-		} else {
-			System.out.println("invalid formula"); // change to tell UserInterface to tell user this
-		}
+		String new_form=rewrite_formula(formula, replacementMap);
+		Metrica metrica = new Metrica(name, new_form, salas_iscte, horario_iscte);
+		metricas.add(metrica);
 	}
+	
+//	  Verifica se a formula é válida:
+//		-acaba com um numero ou atributo
+//		-contém pelo menos um atributo de Aula (para ser uma métrica do horario)
+//		-não tem dois operadores ou atributos seguidos
+//		-se conter um atributo não reconhecido
 
-	private boolean validateFormula(String formula) {
-		String[] splitForm = formula.split(" ");
+	public boolean validateFormula(String formula) {
+		
+		String new_form=rewrite_formula(formula, replacementMap);
+		String[] splitForm = new_form.split(" ");
+		
 		boolean isField = true;
 		boolean hasHorarioField = false;
 		for (String s : splitForm) {
@@ -62,8 +66,8 @@ public class HorarioRater {
 				if (!(fields.contains(s) || isInteger(s))) {
 					return false;
 				}
-				if (!hasHorarioField && isHorarioField(s)) {
-					hasHorarioField=true;
+				if (!hasHorarioField && isAula(s)) {
+					hasHorarioField = true;
 				}
 			} else {
 				if (!operators.contains(s)) {
@@ -72,87 +76,39 @@ public class HorarioRater {
 			}
 			isField = !isField;
 		}
-		if (!(isField && hasHorarioField)) {
+		if (!(!isField && hasHorarioField)) {
 			return false;
 		} else {
 			return true;
 		}
 	}
 	
-	private static boolean isHorarioField(String field) {
-	    return !isInteger(field) && field.startsWith("h.");
+//	  Reescreve a formula para prefixo.index
+//		prefixo -> "s" se for um atributo de Sala
+//				   "a" se for um atributo de Aula
+//	    index -> index desse atributo na lista de atributos correspondente
+	
+	private static String rewrite_formula(String formula, Map<String, String> replacementMap){
+		for (Map.Entry<String, String> entry : replacementMap.entrySet()) {
+			formula = formula.replace(entry.getKey(), entry.getValue());
+        }
+		return formula;
 	}
+	
+//	  Verifica se o campo inserido pertence a Aula
+	
+	private static boolean isAula(String field) {
+		return !isInteger(field) && field.startsWith("a.");
+	}
+	
+//	  Verifica se o campo inserido é um Integer
 
 	private static boolean isInteger(String s) {
-	    try {
-	        Integer.parseInt(s);
-	        return true;
-	    } catch (NumberFormatException e) {
-	        return false;
-	    }
+		try {
+			Integer.parseInt(s);
+			return true;
+		} catch (NumberFormatException e) {
+			return false;
+		}
 	}
-	// Adicionar uma janela para o user adicionar as metricas
-
-	// Tipos de operações possiveis:
-	// No meio:
-	// +
-	// -
-	// *
-	// /
-	// No fim:
-	// =
-	// ≠
-	// >
-	// <
-	// ≥
-	// ≤
-
-	// Tipos de variaveis possiveis nas formulas:
-	// int
-	// field de salas
-	// field de horario
-
-//	Lista de fields de salas:
-//		1.Edificio
-//		2.Nome Sala
-//		3.Capacidade Normal
-//		4.Capacidade Exame
-//		5.Nº Caracteristicas
-//		6.As Caracteristicas - 31 booleans
-//	
-//	Lista de fields de horario:
-//		1.Curso
-//		2.Unidade Curricular
-//		3.Turno
-//		4.Turma
-//		5.Inscritos no Turno
-//		6.Dia de Semana
-//		7.Hora Inicio de Aula
-//		8.Hora Fim de Aula
-//		9.Data de Aula
-//		10.Caracteristicas Pedidas
-//		11.Sala
-
-//	public int aulasSobrelotadasNum() {
-//		int n = 0;
-//		for (int i = 0; i < salas.size(); i++) {
-//			final int j=i;
-//			int capacity = Integer.valueOf(salas.get(j).get(2));
-//			n += (int) horario.stream().filter(name -> salas.get(j).get(0)==name[1])
-//				 .filter(number -> Integer.valueOf(number[4])<capacity).count(); // unsure if "(int)" is needed"
-//		}
-//		return n;
-//	}
-//	
-//	public int aulasSobrelotadasExtra() {
-//		int n = 0;
-//		for (int i = 0; i < salas.size(); i++) {
-//			final int j=i;
-//			int capacity = Integer.valueOf(salas.get(j).get(2));
-//			n += (int) horario.stream().filter(name -> salas.get(j).get(0)==name[1])
-//				 .filter(number -> Integer.valueOf(number[4])<capacity).count(); // unsure if "(int)" is needed"
-//		}
-//		return n;
-//	}
-
 }
