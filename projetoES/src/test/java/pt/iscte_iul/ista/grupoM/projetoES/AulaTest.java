@@ -3,6 +3,7 @@ package pt.iscte_iul.ista.grupoM.projetoES;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.time.LocalTime;
+import java.util.List;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
@@ -104,6 +105,24 @@ class AulaTest {
 	final void getAula_sala_atribuida() {
 		aula = new Aula();
 		assertNull(aula.getAula_sala_atribuida());
+	}
+	
+	@Test
+	final void testGetNum_atributos() {
+		aula = new Aula();
+        aula.set_aula("ME;Teoria dos Jogos e dos Contratos;01789TP01;MEA1;30;Sex;13:00:00;14:30:00;02/12/2022;Sala Aulas Mestrado;AA2.25");
+        int atributos = aula.getNum_atributos();
+
+        assertEquals(11,atributos);
+	}
+	
+	@Test
+	final void testGetAtributos() {
+		aula = new Aula();
+        aula.set_aula("ME;Teoria dos Jogos e dos Contratos;01789TP01;MEA1;30;Sex;13:00:00;14:30:00;02/12/2022;Sala Aulas Mestrado;AA2.25");
+        List<String> atributos = aula.getAtributos();
+
+        assertEquals("ME;Teoria dos Jogos e dos Contratos;01789TP01;MEA1;30;Sex;13:00:00;14:30:00;02/12/2022;Sala Aulas Mestrado;AA2.25", atributos);
 	}
 	
 }
