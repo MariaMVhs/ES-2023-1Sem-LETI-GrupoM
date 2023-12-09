@@ -27,7 +27,7 @@ public class Sala {
 		
 		/**
 		 * Define os atributos da sala.
-		 * @param linha String que contém os atributos separados por ponto e vírgula.
+		 * @param linha String que contem os atributos separados por ponto e virgula.
 		 */
 		public void set_sala(String linha) {
 
@@ -42,6 +42,10 @@ public class Sala {
 		}
 		
 		
+		/**
+		 * Devolve o nome do edificio.
+		 * @return o nome do edificio.
+		 */
 		public String getNome_edificio_sala() {
 			if(!atributos.isEmpty()) {
 				return atributos.get(0);
@@ -50,7 +54,10 @@ public class Sala {
 
 		}
 		
-		
+		/**
+		 * Devolve a sala.
+		 * @return a sala.
+		 */
 		public String getNome_sala() {
 			if(!atributos.isEmpty()) {
 				return atributos.get(1);
@@ -58,23 +65,34 @@ public class Sala {
 			return null;
 		}
 		
-
+		/**
+		 * Devolve a capacidade normal da sala.
+		 * @return a capacidade normal da sala.
+		 */
 		public int getCapacidade_normal() {
 			if(!atributos.isEmpty()) {
 				return Integer.parseInt(atributos.get(2));
 			}
 			return 0;
 		}
-
+				
+		/**
+		 * Devolve a capacidade em exame da sala.
+		 * @return a capacidade em exame da sala.
+		 */
 		public int getCapacidade_exame() {
 			if(!atributos.isEmpty()) {
 				return Integer.parseInt(atributos.get(3));
 			}
 			return 0;
-	}
+		}
 	
-	public List<String> getAtributos(){
-		return atributos;
-	}
+		/**
+		 * Devolve os atributos da Sala.
+		 * @return os atributos da Sala.
+		 */
+		public List<String> getAtributos(){
+			return atributos;
+		}
 	
 }

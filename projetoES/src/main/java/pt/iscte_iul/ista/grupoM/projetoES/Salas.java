@@ -83,14 +83,26 @@ public class Salas {
 		}
 	}
 	
+	/**
+     * Devolve a lista de salas.
+     * @return a lista de salas.
+     */
 	public List<Sala> getSalas(){
 		return salas_iscte;
 	}
-	
+
+	/**
+     * Devolve o numero de salas.
+     * @return o numero de salas.
+     */
 	public int getNum_salas(){
 		return num_salas;
 	}
-	
+
+	/**
+     * Devolve a lista dos atributos de Salas.
+     * @return a lista dos atributos de Salas.
+     */
 	public List<String> getAtributos_salas(){
 		return atributos_salas;
 	}
