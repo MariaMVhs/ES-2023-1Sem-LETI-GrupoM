@@ -72,6 +72,9 @@ public class Sala {
 			}
 			return 0;
 	}
-
-		
+	
+	public List<String> getAtributos(){
+		return atributos;
+	}
+	
 }
