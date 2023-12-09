@@ -99,6 +99,10 @@ public class Horario {
 		return aulas_iscte.get(index);
 	}
 
+	public List<Aula> getAulas() {
+		return aulas_iscte;
+	}
+
 	public List<String> getAtributos_aulas() {
 		return atributos_aulas;
 	}

@@ -82,4 +82,16 @@ public class Salas {
 			System.out.println(sala);
 		}
 	}
+	
+	public List<Sala> getSalas(){
+		return salas_iscte;
+	}
+	
+	public int getNum_salas(){
+		return num_salas;
+	}
+	
+	public List<String> getAtributos_salas(){
+		return atributos_salas;
+	}
 }
