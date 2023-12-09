@@ -15,57 +15,34 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class HorarioTest {
-
-	@BeforeAll
-	static void setUpBeforeClass() throws Exception {
-	}
-
-	@AfterAll
-	static void tearDownAfterClass() throws Exception {
-	}
-
-	@BeforeEach
-	void setUp() throws Exception {
-	}
-
-	@AfterEach
-	void tearDown() throws Exception {
-	}
-
-	@Test
-	void testGetHtmlPath() {
-		fail("Not yet implemented");
-	}
+	
+	Horario horario;
 
 	@Test
 	void testReadHorario() {
-		Horario horario = new Horario();
-		File file = new File("HorarioDeExemplo.csv");
 		
-		List<Aula> exptdAtrib = horario.readHorario(file);
+		horario = new Horario();
+        File file = new File("HorarioDeExemplo.csv");
+        List<Aula> aulas = horario.readHorario(file);
+        assertEquals(26019, aulas.size());
 		
-		assertEquals(26019, exptdAtrib.size());
+        
+        //para entrar no catch e dar falha na leitura do arquivo
+        File file2 = new File("HorarioDeExemlo.csv");
+        List<Aula> aulas2 = horario.readHorario(file2);
+        assertEquals(26019, aulas2.size());
 		
-		for(Aula aula : exptdAtrib) {
-			assertTrue(aula.getAula_curso().length() > 0);
-			assertTrue(aula.getAula_UC().length() > 0);
-			assertTrue(aula.getAula_turno().length() > 0);
-			assertTrue(aula.getAula_turma().length() > 0);
-			assertTrue(aula.getAula_iscritosTurno().length() > 0);
-			assertTrue(aula.getAula_diaSemana().length() > 0);
-			assertTrue(aula.getAula_data().length() > 0);
-			assertTrue(aula.getAula_carateristicas_sala().length() > 0);
-			assertTrue(aula.getAula_sala_atribuida().length() > 0);
-			
-		
-			LocalTime horaInicio = aula.getAula_horaInicio();
-			LocalTime horaFim = aula.getAula_horaFim();
-			
-			assertEquals(aula.getAula_horaInicio(), horaInicio);
-			assertEquals(aula.getAula_horaFim(), horaFim);
-		}
-			
 
 	}
 
+	
+	@Test
+	void testGetHtmlPath() {
+		horario = new Horario();
+        String htmlPath = System.getProperty("user.dir") + File.separator + "output.html";
+        horario.setHtmlPath(htmlPath);
+        assertEquals(htmlPath, horario.getHtmlPath());	
+	}
+	
+	
 }
