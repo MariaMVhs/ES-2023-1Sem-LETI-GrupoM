@@ -88,7 +88,7 @@ public class Aula {
 		return null;
 	}
 
-	public String getAula_iscritosTurno() {
+	public String getAula_inscritosTurno() {
 		if(!atributos.isEmpty()) {
 			return atributos.get(4);
 		}

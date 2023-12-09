@@ -30,7 +30,7 @@ class AulaTest {
 		assertEquals("Teoria dos Jogos e dos Contratos", aula.getAula_UC());
 		assertEquals("01789TP01", aula.getAula_turno());
 		assertEquals("MEA1", aula.getAula_turma());
-		assertEquals("30", aula.getAula_iscritosTurno());
+		assertEquals("30", aula.getAula_inscritosTurno());
 		assertEquals("Sex",aula.getAula_diaSemana());
 		assertEquals(horaInicioEsperada ,aula.getAula_horaInicio());
 		assertEquals(horaFimEsperada,aula.getAula_horaFim());
@@ -39,5 +39,71 @@ class AulaTest {
 		assertEquals("AA2.25", aula.getAula_sala_atribuida());	
 	
 	}
+	
+	@Test
+	final void testGetAula_curso() {
+		aula = new Aula();
+		assertNull(aula.getAula_curso());
+	}
+	
+	@Test
+	final void testGetAula_UC() {
+		aula = new Aula();
+		assertNull(aula.getAula_UC());
+	}
+	
+	@Test
+	final void testGetAula_turno() {
+		aula = new Aula();
+		assertNull(aula.getAula_turno());
+	}
+	
+	@Test
+	final void testGetAula_turma() {
+		aula = new Aula();
+		assertNull(aula.getAula_turma());
+	}
+	
+	@Test
+	final void testGetAula_iscritosTurno() {
+		aula = new Aula();
+		assertNull(aula.getAula_inscritosTurno());
+	}
+	
+	@Test
+	final void testGetAula_diaSemana() {
+		aula = new Aula();
+		assertNull(aula.getAula_diaSemana());
+	}
+	
+	@Test
+	final void getAula_horaInicio() {
+		aula = new Aula();
+		assertNull(aula.getAula_horaInicio());
+	}
+	
+	@Test
+	final void getAula_horaFim() {
+		aula = new Aula();
+		assertNull(aula.getAula_horaFim());
+	}
 
+	@Test
+	final void getAula_data() {
+		aula = new Aula();
+		assertNull(aula.getAula_data());
+	}
+	
+	@Test
+	final void getAula_caracteristicas_sala() {
+		aula = new Aula();
+		assertNull(aula.getAula_carateristicas_sala());
+	}
+	
+	@Test
+	final void getAula_sala_atribuida() {
+		aula = new Aula();
+		assertNull(aula.getAula_sala_atribuida());
+	}
+	
 }
