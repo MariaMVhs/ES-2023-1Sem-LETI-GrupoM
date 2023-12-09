@@ -27,7 +27,7 @@ class HorarioTest {
         assertEquals(26019, aulas.size());
 		
         
-        //para entrar no catch e dar falha na leitura do arquivo
+        //para entrar no catch e dar falha na leitura do CSV
         File file2 = new File("HorarioDeExemlo.csv");
         List<Aula> aulas2 = horario.readHorario(file2);
         assertEquals(26019, aulas2.size());
