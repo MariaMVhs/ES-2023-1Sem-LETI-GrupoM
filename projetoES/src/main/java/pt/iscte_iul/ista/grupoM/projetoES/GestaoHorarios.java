@@ -3,9 +3,18 @@ package pt.iscte_iul.ista.grupoM.projetoES;
 import java.io.File;
 import java.util.List;
 
+/**
+ * A classe GestaoHorarios é a classe principal que contem o metodo main para iniciar a aplicacao.
+ * A execucao inicia a interface para interacao com o sistema
+ * 
+ */
 public class GestaoHorarios {
 
-
+	 /**
+     * Metodo principal que inicia a aplicacao.
+     *
+     * @param args Argumentos de linha de comando (nao utilizados).
+     */
 	public static void main(String[] args) {
 	
 		File fileHorario = new File("HorarioDeExemplo.csv");

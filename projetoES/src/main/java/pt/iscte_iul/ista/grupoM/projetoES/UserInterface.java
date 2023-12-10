@@ -26,6 +26,10 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+/**
+ * A UserInterface e responsavel pela interface grafica do sistema de gestao de horarios,
+ * 
+ */
 public class UserInterface {
 
 	private Salas salas_iscte;
@@ -35,6 +39,10 @@ public class UserInterface {
 	private CardLayout cardLayout;
 	private HorarioRater rater;
 
+	 /**
+     * Construtor UserInterface
+     * 
+     */
 	public UserInterface() {
 		salas_iscte = new Salas();
 		horario_iscte = new Horario();
@@ -44,7 +52,10 @@ public class UserInterface {
 	}
 
 //	  Apresenta o primeiro panel ao user
-
+	 /**
+     * Inicia a interface grafica
+     * 
+     */
 	public void start() {
 
 		if (horario_iscte.getNum_aulas() > 0 && salas_iscte.getNum_salas() > 0) {
@@ -58,7 +69,10 @@ public class UserInterface {
 	}
 
 //	  Janela para o utilizador dar o ficheiro csv com a informação das Salas
-
+	/**
+	 *  Janela para o utilizador dar o ficheiro csv com a informação das Salass
+	 * 
+     */
 	public void window_readSalas() {
 
 		JFileChooser chooser = new JFileChooser(); // Janela para escolher o ficheiro
@@ -78,7 +92,10 @@ public class UserInterface {
 	}
 
 //	  Janela para o utilizador dar o ficheiro csv com a informação do Horario
-
+	
+	/**
+	 * Janela para o utilizador dar o ficheiro csv com a informação do Horario
+	 */
 	public void window_readHorario() {
 
 		JFileChooser chooser = new JFileChooser(); // Janela para escolher o ficheiro
@@ -106,13 +123,21 @@ public class UserInterface {
 	}
 
 //	  Para poder usar as Salas do GestaoHorarios
-
+	 /**
+     * Define as Salas a serem utilizadas.
+     *
+     * @param salas_iscte Salas a ser utilizado.
+     */
 	public void setSalas(Salas salas_iscte) {
 		this.salas_iscte = salas_iscte;
 	}
 
 //	  Para poder usar o Horario do GestaoHorarios
-
+	/**
+     * Define o Horario a ser utilizado.
+     *
+     * @param horario_iscte Horario a ser utilizado.
+     */
 	public void setHorario(Horario horario_iscte) {
 		this.horario_iscte = horario_iscte;
 	}

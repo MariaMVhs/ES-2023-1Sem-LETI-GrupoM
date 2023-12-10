@@ -7,8 +7,19 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
 
+/**
+ * A classe HtmlManager criar e gerir o HTML
+ * 
+ */
 public class HtmlManager {
-
+	 
+	/**
+     * Cria um HTML contendo o horario em formato de tabela utilizando a biblioteca Tabulator.
+     *
+     * @param aulas_iscte O Horario que contem as informacoes das aulas.
+     * @return O caminho do HTML.
+     * @throws FileNotFoundException Exceçcao lancada caso ocorra um erro ao criar o arquivo.
+     */
 	public static String createHtml(Horario aulas_iscte) throws FileNotFoundException {
 		String htmlPath = "";
 		int pageSize = 20;
@@ -76,7 +87,13 @@ public class HtmlManager {
 		writer.close();
 		return htmlPath;
 	}
-
+	
+    /**
+     * Abre o navegador para visualizar o HTML.
+     *
+     * @param htmlPath O caminho do HTML a ser aberto.
+     * @throws IOException Excecao lancada caso ocorra um erro ao abrir o navegador.
+     */
 	public static void openBrowser(String htmlPath) throws IOException {
 		Desktop desktop = Desktop.isDesktopSupported() ? Desktop.getDesktop() : null;
 		if (desktop != null && desktop.isSupported(Desktop.Action.BROWSE)) {

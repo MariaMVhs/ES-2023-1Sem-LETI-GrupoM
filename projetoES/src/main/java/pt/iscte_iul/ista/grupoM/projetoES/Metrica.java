@@ -9,6 +9,10 @@ import org.apache.commons.jexl3.JexlEngine;
 import org.apache.commons.jexl3.JexlExpression;
 import org.apache.commons.jexl3.MapContext;
 
+/**
+ * Classe que representa a metrica
+ * 
+ */
 public class Metrica {
 
 	private Salas salas_iscte;
@@ -20,7 +24,14 @@ public class Metrica {
 	private JexlEngine jexl;
 
 //	No input da formula os fields vao ser escritos como s.(index do field nas salas) ou h.(index do field em horario)
-
+	/**
+	 * Construtor da classe metrica
+	 * 
+	 * @param name   Nome da metrica.
+     * @param formula   Formula para avaliacao de Aulas.
+     * @param salas_iscte   Contem dados de Salas.
+     * @param horario_iscte Contem dados de Horario. 
+	 */
 	public Metrica(String name, String formula, Salas salas_iscte, Horario horario_iscte) {
 		jexl = new JexlBuilder().create();
 		this.name = name;
@@ -82,14 +93,33 @@ public class Metrica {
 		return (boolean) expression.evaluate(context);
 	}
 
+	
+	/**
+	 * Poe o nome na metrica
+	 * 
+	 * @param name O nome da nova metrica.
+	 * 
+	 */
 	public void setName(String name) {
 		this.name = name;
 	}
-
+	
+	/**
+	 * Devolve o nome da metrica.
+	 * 
+	 * @return O nome da metrica
+	 * 
+	 */
 	public String getName() {
 		return name;
 	}
-
+	
+	/**
+	 * Devolve numero de aulas que coicidem com o criterio da metrica.
+	 * 
+	 * @return resultado do numero de aulas que coicidem com o criterio da metrica.
+	 * 
+	 */
 	public int getResult() {
 		return result;
 	}
