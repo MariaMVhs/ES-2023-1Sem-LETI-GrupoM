@@ -7,7 +7,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * A classe HorarioRater e responsavel por gerir e avaliar metricas sobre um horario,
+ * A classe HorarioRater e responsavel por gerir e avaliar metricas sobre um
+ * horario,
  * 
  */
 public class HorarioRater {
@@ -18,11 +19,11 @@ public class HorarioRater {
 	private List<Metrica> metricas;
 
 	/**
-     * Construtor da classe HorarioRater 
-     *
-     * @param salas_iscte  Salas a ser utilizado.
-     * @param horario_iscte  Horario a ser utilizado.
-     */
+	 * Construtor da classe HorarioRater
+	 *
+	 * @param salas_iscte   Salas a ser utilizado.
+	 * @param horario_iscte Horario a ser utilizado.
+	 */
 	HorarioRater(Salas salas_iscte, Horario horario_iscte) {
 
 		this.salas_iscte = salas_iscte;
@@ -32,46 +33,46 @@ public class HorarioRater {
 	}
 
 //	  Cria e guarda a metrica
-	 /**
-     * Cria e guarda uma nova metrica na lista de metricas.
-     *
-     * @param name Nome da metrica.
-     * @param formula Formula da metrica.
-     */
+	/**
+	 * Cria e guarda uma nova metrica na lista de metricas.
+	 *
+	 * @param name    Nome da metrica.
+	 * @param formula Formula da metrica.
+	 */
 	public void addMetrica(String name, String formula) {
 		String new_form = rewrite_formula(formula);
 		Metrica metrica = new Metrica(name, new_form, salas_iscte, horario_iscte);
 		metricas.add(metrica);
 	}
-	
+
 //	  Remove uma metrica da lista
-	  /**
-     * Remove uma metrica da lista.
-     *
-     * @param name Nome da metrica a ser removida.
-     * @return true se a metrica foi removida com sucesso, false caso contrario.
-     */
-	public boolean removeMetrica(String name){
-		for(Metrica metrica : metricas){
-			if(metrica.getName().equals(name)){
+	/**
+	 * Remove uma metrica da lista.
+	 *
+	 * @param name Nome da metrica a ser removida.
+	 * @return true se a metrica foi removida com sucesso, false caso contrario.
+	 */
+	public boolean removeMetrica(String name) {
+		for (Metrica metrica : metricas) {
+			if (metrica.getName().equals(name)) {
 				metricas.remove(metrica);
 				return true;
 			}
 		}
 		return false;
 	}
-	
+
 //	  Muda o nome de uma Metrica
-	  /**
-     * Muda o nome de uma Metrica.
-     *
-     * @param oldName Nome atual da metrica.
-     * @param newName Novo nome desejado para a metrica.
-     * @return true se o nome foi alterado com sucesso, false caso contrario.
-     */
-	public boolean renameMetrica(String oldName, String newName){
-		for(Metrica metrica : metricas){
-			if(metrica.getName().equals(oldName)){
+	/**
+	 * Muda o nome de uma Metrica.
+	 *
+	 * @param oldName Nome atual da metrica.
+	 * @param newName Novo nome desejado para a metrica.
+	 * @return true se o nome foi alterado com sucesso, false caso contrario.
+	 */
+	public boolean renameMetrica(String oldName, String newName) {
+		for (Metrica metrica : metricas) {
+			if (metrica.getName().equals(oldName)) {
 				metrica.setName(newName);
 				return true;
 			}
@@ -85,11 +86,11 @@ public class HorarioRater {
 //		-não tem dois operadores ou atributos seguidos
 //		-se conter um atributo não reconhecido
 	/**
-     * Verifica se a formula fornecida e valida para o calculo de metricas.
-     *
-     * @param formula Formula a ser validada.
-     * @return true se a formula e valida, false caso contrario.
-     */
+	 * Verifica se a formula fornecida e valida para o calculo de metricas.
+	 *
+	 * @param formula Formula a ser validada.
+	 * @return true se a formula e valida, false caso contrario.
+	 */
 	public boolean validateFormula(String formula) {
 
 		List<String> fields = new ArrayList<String>(); // lista com os atributos de Sala e Aula
@@ -131,12 +132,12 @@ public class HorarioRater {
 	}
 
 //	  Forma uma matriz com o nome de cada metrica na coluna esquerda e o resultado correspondente na direita
-	 /**
-     * Forma uma matriz com o nome de cada metrica na coluna esquerda
-     * e o resultado correspondente na direita.
-     *
-     * @return Matriz com informacoes das metricas.
-     */
+	/**
+	 * Forma uma matriz com o nome de cada metrica na coluna esquerda e o resultado
+	 * correspondente na direita.
+	 *
+	 * @return Matriz com informacoes das metricas.
+	 */
 	public String[][] getTableInfo() {
 
 		int numLinhas = metricas.size();
@@ -152,44 +153,44 @@ public class HorarioRater {
 //	  Calcula e devolve a avaliação do horário fazendo a média das percentagens de quantas aulas
 //	  foram selecionadas pela formula de cada Metrica
 	/**
-     * Calcula e retorna a avaliacao do horario, fazendo a media das percentagens
-     * de aulas selecionadas pela formula de cada metrica.
-     *
-     * @return Avaliacao do horario.
-     */
+	 * Calcula e retorna a avaliacao do horario, fazendo a media das percentagens de
+	 * aulas selecionadas pela formula de cada metrica.
+	 *
+	 * @return Avaliacao do horario.
+	 */
 	public double getRating() {
 		double rating = 0;
 		double somatorio = 0;
 		for (Metrica metrica : metricas) {
-			double porcao_aulas = (double)(metrica.getResult()) / horario_iscte.getNum_aulas();
+			double porcao_aulas = (double) (metrica.getResult()) / horario_iscte.getNum_aulas();
 			somatorio += porcao_aulas;
 		}
 		rating = somatorio / metricas.size();
 		return rating;
 	}
-	
-	 /**
-     * Retorna o numero de metricas na lista.
-     *
-     * @return Numero de metricas na lista.
-     */
-	public int getNum_metricas(){
+
+	/**
+	 * Retorna o numero de metricas na lista.
+	 *
+	 * @return Numero de metricas na lista.
+	 */
+	public int getNum_metricas() {
 		return metricas.size();
 	}
-	
+
 	/**
-     * Retorna uma lista com os nomes de todas as metricas na lista.
-     *
-     * @return Lista de nomes de metricas.
-     */
-	public List<String> getNome_metricas(){
+	 * Retorna uma lista com os nomes de todas as metricas na lista.
+	 *
+	 * @return Lista de nomes de metricas.
+	 */
+	public List<String> getNome_metricas() {
 
 		List<String> lista_nomes = new ArrayList<>();
-		for(Metrica metrica : metricas){
+		for (Metrica metrica : metricas) {
 			lista_nomes.add(metrica.getName());
 		}
 		return lista_nomes;
-		
+
 	}
 
 //	  Reescreve a formula para prefixo.index

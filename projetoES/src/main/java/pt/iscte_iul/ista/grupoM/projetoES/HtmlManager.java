@@ -12,14 +12,16 @@ import java.util.List;
  * 
  */
 public class HtmlManager {
-	 
+
 	/**
-     * Cria um HTML contendo o horario em formato de tabela utilizando a biblioteca Tabulator.
-     *
-     * @param aulas_iscte O Horario que contem as informacoes das aulas.
-     * @return O caminho do HTML.
-     * @throws FileNotFoundException Exceçcao lancada caso ocorra um erro ao criar o arquivo.
-     */
+	 * Cria um HTML contendo o horario em formato de tabela utilizando a biblioteca
+	 * Tabulator.
+	 *
+	 * @param aulas_iscte O Horario que contem as informacoes das aulas.
+	 * @return O caminho do HTML.
+	 * @throws FileNotFoundException Exceçcao lancada caso ocorra um erro ao criar o
+	 *                               arquivo.
+	 */
 	public static String createHtml(Horario aulas_iscte) throws FileNotFoundException {
 		String htmlPath = "";
 		int pageSize = 20;
@@ -71,8 +73,16 @@ public class HtmlManager {
 		// escreve o nome das colunas, que vai buscar à lista de atributos das aulas no
 		// Horario
 		writer.println("columns: [");
-		for (String header : aulas_iscte.getAtributos_aulas()) {
-			writer.println("{ title: \"" + header + "\", field: \"" + header + "\" },");
+
+		int num_atributos = aulas_iscte.getAtributos_aulas().size();
+
+		for (int i = 0; i < num_atributos; i++) {
+			String header = aulas_iscte.getAtributos_aulas().get(i);
+			if (i == 4) {
+				writer.println("{ title: \"" + header + "\", field: \"" + header + "\", headerFilter: \"number\" },");
+			} else {
+				writer.println("{ title: \"" + header + "\", field: \"" + header + "\", headerFilter: \"input\" },");
+			}
 		}
 
 		writer.println("],");
@@ -87,13 +97,13 @@ public class HtmlManager {
 		writer.close();
 		return htmlPath;
 	}
-	
-    /**
-     * Abre o navegador para visualizar o HTML.
-     *
-     * @param htmlPath O caminho do HTML a ser aberto.
-     * @throws IOException Excecao lancada caso ocorra um erro ao abrir o navegador.
-     */
+
+	/**
+	 * Abre o navegador para visualizar o HTML.
+	 *
+	 * @param htmlPath O caminho do HTML a ser aberto.
+	 * @throws IOException Excecao lancada caso ocorra um erro ao abrir o navegador.
+	 */
 	public static void openBrowser(String htmlPath) throws IOException {
 		Desktop desktop = Desktop.isDesktopSupported() ? Desktop.getDesktop() : null;
 		if (desktop != null && desktop.isSupported(Desktop.Action.BROWSE)) {
