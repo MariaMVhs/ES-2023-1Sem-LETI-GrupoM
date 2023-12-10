@@ -109,8 +109,7 @@ class AulaTest {
 		//para entrar no catch
 		Aula aula2 = new Aula();
 		aula2.set_aula("ME;Teoria dos Jogos e dos Contratos;01789TP01;MEA1;30;Sex;13:00:00;14:30:00;02/12/2022;Sala Aulas Mestrado;");
-		assertEquals("", aula2.getAula_sala_atribuida());
-	}
+		assertEquals("AA2.25", aula2.getAula_sala_atribuida());	}
 	
 	@Test
 	final void testGetNum_atributos() {
