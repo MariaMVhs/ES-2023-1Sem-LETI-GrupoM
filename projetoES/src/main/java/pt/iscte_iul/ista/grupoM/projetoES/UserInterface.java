@@ -26,6 +26,10 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+/**
+ * A UserInterface e responsavel pela interface grafica do sistema de gestao de horarios,
+ * 
+ */
 public class UserInterface {
 
 	private Salas salas_iscte;
@@ -33,8 +37,12 @@ public class UserInterface {
 	private JFrame frame_main;
 	private JPanel pnl_main;
 	private CardLayout cardLayout;
-	private HorarioRater rater;
+	private HorarioRater classificador;
 
+	 /**
+     * Construtor UserInterface
+     * 
+     */
 	public UserInterface() {
 		salas_iscte = new Salas();
 		horario_iscte = new Horario();
@@ -44,11 +52,14 @@ public class UserInterface {
 	}
 
 //	  Apresenta o primeiro panel ao user
-
+	 /**
+     * Inicia a interface grafica
+     * 
+     */
 	public void start() {
 
 		if (horario_iscte.getNum_aulas() > 0 && salas_iscte.getNum_salas() > 0) {
-			rater = new HorarioRater(salas_iscte, horario_iscte);
+			classificador = new HorarioRater(salas_iscte, horario_iscte);
 			createMainPanel();
 			frame_main.getContentPane().add(pnl_main);
 			frame_main.setVisible(true);
@@ -58,7 +69,10 @@ public class UserInterface {
 	}
 
 //	  Janela para o utilizador dar o ficheiro csv com a informação das Salas
-
+	/**
+	 *  Janela para o utilizador dar o ficheiro csv com a informação das Salass
+	 * 
+     */
 	public void window_readSalas() {
 
 		JFileChooser chooser = new JFileChooser(); // Janela para escolher o ficheiro
@@ -78,7 +92,10 @@ public class UserInterface {
 	}
 
 //	  Janela para o utilizador dar o ficheiro csv com a informação do Horario
-
+	
+	/**
+	 * Janela para o utilizador dar o ficheiro csv com a informação do Horario
+	 */
 	public void window_readHorario() {
 
 		JFileChooser chooser = new JFileChooser(); // Janela para escolher o ficheiro
@@ -106,15 +123,33 @@ public class UserInterface {
 	}
 
 //	  Para poder usar as Salas do GestaoHorarios
-
+	 /**
+     * Define as Salas a serem utilizadas.
+     *
+     * @param salas_iscte Salas a ser utilizado.
+     */
 	public void setSalas(Salas salas_iscte) {
 		this.salas_iscte = salas_iscte;
 	}
 
 //	  Para poder usar o Horario do GestaoHorarios
-
+	/**
+     * Define o Horario a ser utilizado.
+     *
+     * @param horario_iscte Horario a ser utilizado.
+     */
 	public void setHorario(Horario horario_iscte) {
 		this.horario_iscte = horario_iscte;
+	}
+	
+//	  Para poder usar um HorarioRater importado
+	/**
+   * Define o Classificador de Horario a ser utilizado.
+   *
+   * @param classificador Horario a ser utilizado.
+   */
+	public void setHorarioRater(HorarioRater classificador) {
+		this.classificador = classificador;
 	}
 
 //	  Cria o frame e o panel que vão guardar todos os outros panels
@@ -288,9 +323,9 @@ public class UserInterface {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				String formula = input_formula.getText();
-				if (rater.validateFormula(formula)) { // verifica se a formula é válida
+				if (classificador.validateFormula(formula)) { // verifica se a formula é válida
 					String metricaNome = input_name.getText();
-					rater.addMetrica(metricaNome, formula); // guarda a metrica no HorarioRater
+					classificador.addMetrica(metricaNome, formula); // guarda a metrica no HorarioRater
 					cardLayout.show(pnl_main, "editar metricas"); // volta ao panel anterior
 				} else {
 					JOptionPane.showMessageDialog(null, "Invalid formula", "Error", JOptionPane.ERROR_MESSAGE);
@@ -328,7 +363,7 @@ public class UserInterface {
 		pnl_removerMetrica.add(label_remover);
 		
 		//Lista com os nomes das Metricas criadas
-		String[] array_nomes = rater.getNome_metricas().toArray(new String[0]);
+		String[] array_nomes = classificador.getNome_metricas().toArray(new String[0]);
 		JList<String> lista_nomes = new JList<>(array_nomes);
 		JScrollPane scrollPane = new JScrollPane(lista_nomes);
 		pnl_removerMetrica.add(scrollPane);
@@ -339,7 +374,7 @@ public class UserInterface {
 			@Override
 			public void actionPerformed(ActionEvent e) {
                 String metrica_selecionada = lista_nomes.getSelectedValue();
-				if(rater.removeMetrica(metrica_selecionada)){
+				if(classificador.removeMetrica(metrica_selecionada)){
 					frame.dispose();
 				} else {
 					showErrorMessage("Não foi possivel remover Metrica");
@@ -370,7 +405,7 @@ public class UserInterface {
 		pnl_renameMetrica.add(label_remover);
 
 		//Lista com os nomes das Metricas criadas
-		String[] array_nomes = rater.getNome_metricas().toArray(new String[0]);
+		String[] array_nomes = classificador.getNome_metricas().toArray(new String[0]);
 		JList<String> lista_nomes = new JList<>(array_nomes);
 		JScrollPane scrollPane = new JScrollPane(lista_nomes);
 		pnl_renameMetrica.add(scrollPane);
@@ -391,7 +426,7 @@ public class UserInterface {
 			public void actionPerformed(ActionEvent e) {
 				String newName = input_newName.getText();
                 String metrica_selecionada = lista_nomes.getSelectedValue();
-				if(rater.renameMetrica(metrica_selecionada, newName)){
+				if(classificador.renameMetrica(metrica_selecionada, newName)){
 					frame.dispose();
 				} else {
 					showErrorMessage("Não foi possivel mudar o nome da Metrica \"" + newName + "\"");
@@ -422,8 +457,8 @@ public class UserInterface {
 		//	-a avaliação dada ao horário se já houverem metricas
 		//	-que não há metricas se não tiver qualquer metrica
 		JLabel label_qualidade = new JLabel();
-		if (rater.getNum_metricas() > 0) {
-			label_qualidade.setText("Qualidade do horário: " + (int) Math.round(rater.getRating() * 100) + "/100");
+		if (classificador.getNum_metricas() > 0) {
+			label_qualidade.setText("Qualidade do horário: " + (int) Math.round(classificador.getRating() * 100) + "/100");
 		} else {
 			label_qualidade.setText("Nenhuma metrica disponível");
 		}
@@ -431,7 +466,7 @@ public class UserInterface {
 		
 		//Tabela com o nome da Metrica à esquerda e o numero de aulas confirmadas pela formula à direita
 		String[] nomesColunas = { "Metrica", "Resultado" };
-		String[][] data = rater.getTableInfo();
+		String[][] data = classificador.getTableInfo();
 		JTable tabela = new JTable(data, nomesColunas);
 		JScrollPane scrollPane = new JScrollPane(tabela);
 		pnl_qualidade.add(scrollPane);
