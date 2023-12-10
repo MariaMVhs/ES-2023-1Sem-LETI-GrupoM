@@ -28,7 +28,6 @@ public class Metrica {
 		this.salas_iscte = salas_iscte;
 		this.horario_iscte = horario_iscte;
 		calcMetrica();
-		System.out.println(result);
 	}
 
 //	Faz a contagem das aulas que verificam a formula
@@ -83,6 +82,10 @@ public class Metrica {
 		return (boolean) expression.evaluate(context);
 	}
 
+	public void setName(String name) {
+		this.name = name;
+	}
+
 	public String getName() {
 		return name;
 	}
@@ -90,12 +93,12 @@ public class Metrica {
 	public int getResult() {
 		return result;
 	}
-	
+
 //	  Para normalizar a String inserida, deixando só os caracteres a-z, A-Z, e 0-9
 
 	private static String normaliza(String input) {
 		String output = input.replaceAll("[^a-zA-Z0-9]", "");
-		java.text.Normalizer.normalize(input, Normalizer.Form.NFD);		//remove caracteres desconhecidos
+		java.text.Normalizer.normalize(input, Normalizer.Form.NFD); // remove caracteres desconhecidos
 		return output;
 
 	}

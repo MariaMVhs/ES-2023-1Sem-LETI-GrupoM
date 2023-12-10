@@ -10,44 +10,49 @@ public class HorarioRater {
 
 	private Salas salas_iscte;
 	private Horario horario_iscte;
+
 	private List<Metrica> metricas;
-	private List<String> fields;
-	private List<String> operators;
-	private Map<String, String> replacementMap;
 
 	HorarioRater(Salas salas_iscte, Horario horario_iscte) {
-		
+
 		this.salas_iscte = salas_iscte;
 		this.horario_iscte = horario_iscte;
-		
-		metricas = new ArrayList<Metrica>();	//lista com as metricas guardadas
-		fields = new ArrayList<String>();		//lista com os atributos de Sala e Aula
-		operators = new ArrayList<String>();	//lista com os operadores possiveis
-        replacementMap = new HashMap<>();		//mapa com as substituições para o rewrite_formula
-        
-        int n=0;
-        for(String atrib_aula : horario_iscte.getAtributos_aulas()){
-        	fields.add("a." + n);
-        	replacementMap.put(atrib_aula, "a." + n);
-        	n++;
-        }
-        n=0;
-        for(String atrib_sala : salas_iscte.getAtributos_salas()){
-        	fields.add("s." + n);
-        	replacementMap.put(atrib_sala, "s." + n);
-        	n++;
-        }
-        operators.addAll(Arrays.asList("+", "-", "*", "/", "==", "<", ">", "<=", ">="));
+
+		metricas = new ArrayList<Metrica>(); // lista com as metricas guardadas
 	}
-	
+
 //	  Cria e guarda a metrica
 
 	public void addMetrica(String name, String formula) {
-		String new_form=rewrite_formula(formula, replacementMap);
+		String new_form = rewrite_formula(formula);
 		Metrica metrica = new Metrica(name, new_form, salas_iscte, horario_iscte);
 		metricas.add(metrica);
 	}
 	
+//	  Remove uma metrica da lista
+	
+	public boolean removeMetrica(String name){
+		for(Metrica metrica : metricas){
+			if(metrica.getName().equals(name)){
+				metricas.remove(metrica);
+				return true;
+			}
+		}
+		return false;
+	}
+	
+//	  Muda o nome de uma Metrica
+	
+	public boolean renameMetrica(String oldName, String newName){
+		for(Metrica metrica : metricas){
+			if(metrica.getName().equals(oldName)){
+				metrica.setName(newName);
+				return true;
+			}
+		}
+		return false;
+	}
+
 //	  Verifica se a formula é válida:
 //		-acaba com um numero ou atributo
 //		-contém pelo menos um atributo de Aula (para ser uma métrica do horario)
@@ -55,10 +60,21 @@ public class HorarioRater {
 //		-se conter um atributo não reconhecido
 
 	public boolean validateFormula(String formula) {
-		
-		String new_form=rewrite_formula(formula, replacementMap);
+
+		List<String> fields = new ArrayList<String>(); // lista com os atributos de Sala e Aula
+		List<String> operators = new ArrayList<String>(); // lista com os operadores possiveis
+
+		for (int i = 0; i < horario_iscte.getNum_aulas(); i++) {
+			fields.add("a." + i);
+		}
+		for (int i = 0; i < salas_iscte.getNum_salas(); i++) {
+			fields.add("s." + i);
+		}
+		operators.addAll(Arrays.asList("+", "-", "*", "/", "==", "<", ">", "<=", ">="));
+
+		String new_form = rewrite_formula(formula);
 		String[] splitForm = new_form.split(" ");
-		
+
 		boolean isField = true;
 		boolean hasHorarioField = false;
 		for (String s : splitForm) {
@@ -82,25 +98,81 @@ public class HorarioRater {
 			return true;
 		}
 	}
+
+//	  Forma uma matriz com o nome de cada metrica na coluna esquerda e o resultado correspondente na direita
+
+	public String[][] getTableInfo() {
+
+		int numLinhas = metricas.size();
+		String[][] data = new String[numLinhas][2];
+		for (int i = 0; i < numLinhas; i++) {
+			Metrica metrica = metricas.get(i);
+			data[i][0] = metrica.getName();
+			data[i][1] = String.valueOf(metrica.getResult());
+		}
+		return data;
+	}
+
+//	  Calcula e devolve a avaliação do horário fazendo a média das percentagens de quantas aulas
+//	  foram selecionadas pela formula de cada Metrica
 	
+	public double getRating() {
+		double rating = 0;
+		double somatorio = 0;
+		for (Metrica metrica : metricas) {
+			double porcao_aulas = (double)(metrica.getResult()) / horario_iscte.getNum_aulas();
+			somatorio += porcao_aulas;
+		}
+		rating = somatorio / metricas.size();
+		return rating;
+	}
+	
+	public int getNum_metricas(){
+		return metricas.size();
+	}
+	
+	public List<String> getNome_metricas(){
+
+		List<String> lista_nomes = new ArrayList<>();
+		for(Metrica metrica : metricas){
+			lista_nomes.add(metrica.getName());
+		}
+		return lista_nomes;
+		
+	}
+
 //	  Reescreve a formula para prefixo.index
 //		prefixo -> "s" se for um atributo de Sala
 //				   "a" se for um atributo de Aula
 //	    index -> index desse atributo na lista de atributos correspondente
-	
-	private static String rewrite_formula(String formula, Map<String, String> replacementMap){
+
+	private String rewrite_formula(String formula) {
+
+		Map<String, String> replacementMap = new HashMap<>(); // mapa com as substituições para o rewrite_formula
+
+		int n = 0;
+		for (String atrib_aula : horario_iscte.getAtributos_aulas()) {
+			replacementMap.put(atrib_aula, "a." + n);
+			n++;
+		}
+		n = 0;
+		for (String atrib_sala : salas_iscte.getAtributos_salas()) {
+			replacementMap.put(atrib_sala, "s." + n);
+			n++;
+		}
+
 		for (Map.Entry<String, String> entry : replacementMap.entrySet()) {
 			formula = formula.replace(entry.getKey(), entry.getValue());
-        }
+		}
 		return formula;
 	}
-	
+
 //	  Verifica se o campo inserido pertence a Aula
-	
+
 	private static boolean isAula(String field) {
 		return !isInteger(field) && field.startsWith("a.");
 	}
-	
+
 //	  Verifica se o campo inserido é um Integer
 
 	private static boolean isInteger(String s) {
