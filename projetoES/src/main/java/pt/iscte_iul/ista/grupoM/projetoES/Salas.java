@@ -29,7 +29,7 @@ public class Salas {
 	
 	
 	/**
-     * Esta função lê um ficheiro e cria uma lista de objetos do tipo Sala.
+     * Esta funcao le um ficheiro e cria uma lista de objetos do tipo Sala.
      * Cada linha do ficheiro representa uma sala com os valores separados por ";"
      * @param file path para CSV
      * @return a lista de salas lidas do CSV.

@@ -8,7 +8,7 @@ import java.util.Map;
 
 /**
  * A classe HorarioRater e responsavel por gerir e avaliar metricas sobre um
- * horario,
+ * horario.
  * 
  */
 public class HorarioRater {

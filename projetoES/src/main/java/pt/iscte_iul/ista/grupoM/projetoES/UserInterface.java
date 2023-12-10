@@ -27,7 +27,7 @@ import javax.swing.JTextField;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
- * A UserInterface e responsavel pela interface grafica do sistema de gestao de horarios,
+ * A UserInterface e responsavel pela interface grafica do sistema de gestao de horario.
  * 
  */
 public class UserInterface {
@@ -70,7 +70,7 @@ public class UserInterface {
 
 //	  Janela para o utilizador dar o ficheiro csv com a informação das Salas
 	/**
-	 *  Janela para o utilizador dar o ficheiro csv com a informação das Salass
+	 *  Janela para o utilizador dar o ficheiro csv com a informacao das Salass
 	 * 
      */
 	public void window_readSalas() {
@@ -91,10 +91,10 @@ public class UserInterface {
 		}
 	}
 
-//	  Janela para o utilizador dar o ficheiro csv com a informação do Horario
+//	  Janela para o utilizador dar o ficheiro csv com a informacao do Horario
 	
 	/**
-	 * Janela para o utilizador dar o ficheiro csv com a informação do Horario
+	 * Janela para o utilizador dar o ficheiro csv com a informacao do Horario
 	 */
 	public void window_readHorario() {
 

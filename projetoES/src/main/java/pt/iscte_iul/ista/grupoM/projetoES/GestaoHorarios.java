@@ -6,7 +6,7 @@ import java.io.FileReader;
 import java.io.IOException;
 
 /**
- * A classe GestaoHorarios é a classe principal que contem o metodo main para
+ * A classe GestaoHorarios e a classe principal que contem o metodo main para
  * iniciar a aplicacao. A execucao inicia a interface para interacao com o
  * sistema
  * 
@@ -32,7 +32,7 @@ public class GestaoHorarios {
 	}
 
 	/**
-	 * Metodo para carregar a informação necessária de um ficheiro txt.
+	 * Metodo para carregar a informacao necessaria de um ficheiro txt.
 	 *
 	 * @param filePath Caminho do ficheiro txt.
 	 */

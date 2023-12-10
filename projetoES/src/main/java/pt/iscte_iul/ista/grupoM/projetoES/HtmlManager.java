@@ -19,7 +19,7 @@ public class HtmlManager {
 	 *
 	 * @param aulas_iscte O Horario que contem as informacoes das aulas.
 	 * @return O caminho do HTML.
-	 * @throws FileNotFoundException Exceçcao lancada caso ocorra um erro ao criar o
+	 * @throws FileNotFoundException Excecao lancada caso ocorra um erro ao criar o
 	 *                               arquivo.
 	 */
 	public static String createHtml(Horario aulas_iscte) throws FileNotFoundException {

@@ -27,7 +27,7 @@ public class Aula {
 	private String aula_carateristicas_sala;
 	private String aula_sala_atribuida;
 
-	// nota: os nomes desses atributos já estão definidos em Horario
+	// nota: os nomes desses atributos ja estão definidos em Horario
 
 	/**
 	 * Construtor da classe Aula.
@@ -44,7 +44,7 @@ public class Aula {
 	/**
 	 * Define os atributos da aula.
 	 * 
-	 * @param linha String que contém os atributos separados por ponto e vírgula.
+	 * @param linha String que contem os atributos separados por ponto e virgula.
 	 */
 	public void set_aula(String linha) {
 
@@ -131,7 +131,7 @@ public class Aula {
 	}
 
 	/**
-     * Devolve a hora em que a aula começa.
+     * Devolve a hora em que a aula comeca.
      * 
      * @return hora de inicio de aula.
      */
