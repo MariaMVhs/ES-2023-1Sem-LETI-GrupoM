@@ -1,0 +1,3 @@
+CaracterizaçãoDasSalas.csv
+HorarioDeExemplo.csv
+Exemplo|Capacidade Normal - Inscritos no turno < 0
